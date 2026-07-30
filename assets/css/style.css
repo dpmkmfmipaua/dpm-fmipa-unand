@@ -1,0 +1,309 @@
+/* ===================================================================
+   DPM KM FMIPA UNAND — "Parlemen of Vision" (PoV)
+   Design Tokens & Custom Styles
+   =================================================================== */
+
+:root {
+  /* --- Warna: "Phoenix of Vision" — Api PoV (identitas kepengurusan)
+     + Hijau DPM (identitas kelembagaan permanen) sebagai aksen sekunder --- */
+  --pov-purple-950: #1A0D08;   /* charcoal hangat / footer / teks gelap */
+  --pov-purple-900: #7A2118;   /* ember merah-bata — primary utama */
+  --pov-purple-700: #C2410C;   /* oranye-merah — hover/gradient */
+  --pov-purple-500: #F2622A;   /* oranye api — aksen interaktif */
+  --pov-purple-100: #FDECE3;   /* peach lembut — background */
+  --pov-gold-500:   #C9A227;   /* emas — aksen "seal" legislatif (senada shield DPM) */
+  --pov-gold-300:   #E4C97A;
+  --pov-off-white:  #FDFAF7;
+  --pov-white:      #FFFFFF;
+  --pov-ink:        #241712;
+  --pov-ink-soft:   #6B5A50;
+  --pov-border:     #F0DFD3;
+
+  /* --- Hijau DPM: identitas resmi & permanen, dipakai sebagai aksen sekunder --- */
+  --dpm-green-900:  #0F4C24;
+  --dpm-green-700:  #16813F;
+  --dpm-green-100:  #E1F3E7;
+
+  /* --- Tipografi --- */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--pov-ink);
+  background: var(--pov-off-white);
+  margin: 0;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono { font-family: var(--font-mono); }
+
+/* ===================== Signature Element: Pasal Marker =====================
+   Motif berulang di seluruh web: label bergaya "Pasal §" karena konten
+   memang produk legislatif — bukan angka dekoratif 01/02/03 generik. */
+.pasal-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pov-gold-500);
+  border: 1px solid var(--pov-gold-500);
+  border-radius: 999px;
+  padding: 0.28rem 0.85rem;
+  background: rgba(201, 162, 39, 0.06);
+}
+
+/* ===================== Pentagon Seal Motif (dari lambang DPM) ===================== */
+.seal-pattern {
+  background-image: radial-gradient(circle at 20% 20%, rgba(201,162,39,0.12) 0%, transparent 45%),
+                     radial-gradient(circle at 80% 60%, rgba(242,98,42,0.18) 0%, transparent 50%);
+}
+
+.clip-pentagon {
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+/* ===================== Navbar ===================== */
+.nav-link {
+  position: relative;
+  color: var(--pov-ink-soft);
+  font-weight: 500;
+  font-size: 0.92rem;
+  transition: color 0.2s ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0; height: 2px;
+  background: var(--pov-gold-500);
+  transition: width 0.25s ease;
+}
+.nav-link:hover { color: var(--pov-purple-900); }
+.nav-link:hover::after { width: 100%; }
+.nav-link.active { color: var(--pov-purple-900); font-weight: 700; }
+.nav-link.active::after { width: 100%; }
+
+/* ===================== Buttons ===================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--pov-purple-900);
+  color: white;
+  font-weight: 600;
+  padding: 0.85rem 1.6rem;
+  border-radius: 0.6rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px -8px rgba(46, 16, 101, 0.55);
+}
+.btn-primary:hover {
+  background: var(--pov-purple-700);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -8px rgba(46, 16, 101, 0.65);
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--pov-gold-500), var(--pov-gold-300));
+  color: var(--pov-purple-950);
+  font-weight: 700;
+  padding: 0.85rem 1.6rem;
+  border-radius: 0.6rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px -8px rgba(201, 162, 39, 0.55);
+}
+.btn-gold:hover { transform: translateY(-2px); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1.5px solid var(--pov-purple-900);
+  color: var(--pov-purple-900);
+  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.6rem;
+  transition: all 0.2s ease;
+}
+.btn-outline:hover { background: var(--pov-purple-900); color: white; }
+
+/* ===================== Cards ===================== */
+.card {
+  background: var(--pov-white);
+  border: 1px solid var(--pov-border);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -18px rgba(46, 16, 101, 0.25);
+  border-color: var(--pov-purple-500);
+}
+
+.avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, var(--pov-purple-700), var(--pov-purple-900));
+}
+
+/* ===================== Filter Chips ===================== */
+.chip {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--pov-border);
+  color: var(--pov-ink-soft);
+  background: white;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.chip:hover { border-color: var(--pov-purple-500); color: var(--pov-purple-900); }
+.chip.active {
+  background: var(--pov-purple-900);
+  border-color: var(--pov-purple-900);
+  color: white;
+}
+
+/* ===================== Badges per Komisi/Biro (kode warna) ===================== */
+.badge-inti     { background:#7A2118; color:#fff; }
+.badge-komisi1  { background:#C2410C; color:#fff; }
+.badge-komisi2  { background:#F2622A; color:#fff; }
+.badge-komisi3  { background:#9A2A17; color:#fff; }
+.badge-infokom  { background:#C9A227; color:#1A0D08; }
+.badge-adm      { background: var(--dpm-green-700); color:#fff; }
+.badge-mitu     { background:#92400E; color:#fff; }
+
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+
+/* ===================== Hero gradient ===================== */
+.hero-gradient {
+  background: radial-gradient(1200px 600px at 15% -10%, rgba(124,58,237,0.35), transparent 60%),
+              linear-gradient(160deg, var(--pov-purple-950) 0%, var(--pov-purple-900) 45%, var(--pov-purple-700) 100%);
+}
+
+/* ===================== Scroll reveal ===================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ===================== Focus visibility (aksesibilitas) ===================== */
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2.5px solid var(--pov-gold-500);
+  outline-offset: 3px;
+}
+
+/* ===================== Progress bar Papan Apresiasi & Donasinasi ===================== */
+.progress-track {
+  width: 100%;
+  height: 14px;
+  background: var(--pov-purple-100);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--pov-border);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pov-gold-500), var(--pov-purple-700));
+  border-radius: 999px;
+  transition: width 1.2s cubic-bezier(.22,1,.36,1);
+}
+
+/* ===================== Logo Trio (DPM + PoV + UNAND) ===================== */
+.logo-trio {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+.logo-trio img, .logo-trio .logo-placeholder {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+}
+.logo-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.25);
+}
+.logo-placeholder {
+  height: 44px;
+  min-width: 44px;
+  border: 1.5px dashed rgba(255,255,255,0.4);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.7);
+  padding: 0 0.6rem;
+}
+
+/* Tag hijau — dipakai untuk elemen bernuansa "resmi/institusional" DPM */
+.tag-institusional {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--dpm-green-900);
+  background: var(--dpm-green-100);
+  border: 1px solid rgba(22, 129, 63, 0.25);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+}
+
+/* ===================== Utility ===================== */
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pov-gold-500);
+  font-weight: 600;
+}
+
+::selection { background: var(--pov-gold-500); color: var(--pov-purple-950); }
+
+/* scrollbar tipis khas dashboard */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--pov-purple-500); border-radius: 999px; }
+::-webkit-scrollbar-track { background: var(--pov-purple-100); }

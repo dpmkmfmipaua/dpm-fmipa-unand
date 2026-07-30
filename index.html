@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DPM KM FMIPA UNAND — Parlemen of Vision (PoV)</title>
+<meta name="description" content="Website resmi Dewan Perwakilan Mahasiswa KM FMIPA Universitas Andalas, Parlemen Parlemen of Vision Periode 2025/2026." />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind (CDN, tanpa build step) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<link rel="icon" type="image/png" href="assets/images/logos/logo-pov.png" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b" style="border-color: var(--pov-border);">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between h-20">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" class="w-12 h-12 object-contain" />
+      <div class="leading-tight">
+        <p class="font-display font-bold text-lg" style="color: var(--pov-purple-900);">DPM KM FMIPA</p>
+        <p class="text-xs tracking-wide" style="color: var(--pov-gold-500);">PARLEMEN OF VISION</p>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="index.html" data-nav="index.html" class="nav-link active">Beranda</a>
+      <a href="pengurus.html" data-nav="pengurus.html" class="nav-link">Struktur Pengurus</a>
+      <a href="hall-of-fame.html" data-nav="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
+      <a href="smart-law-center.html" data-nav="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
+      <a href="wall-of-appreciation.html" data-nav="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
+      <a href="katalog-jasa.html" data-nav="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
+    </nav>
+
+    <a href="#senyap" class="hidden md:inline-flex btn-primary text-sm">
+      <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
+    </a>
+
+    <button id="mobile-menu-btn" class="md:hidden" aria-label="Buka menu" aria-expanded="false">
+      <i data-lucide="menu" class="w-7 h-7" style="color: var(--pov-purple-900);"></i>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden border-t px-5 py-4 flex flex-col gap-4 bg-white" style="border-color: var(--pov-border);">
+    <a href="index.html" class="nav-link">Beranda</a>
+    <a href="pengurus.html" class="nav-link">Struktur Pengurus</a>
+    <a href="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
+    <a href="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
+    <a href="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
+    <a href="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
+    <a href="#senyap" class="btn-primary justify-center text-sm">Kirim Aspirasi (SENYAP)</a>
+  </div>
+</header>
+
+<!-- ============ HERO SECTION ============ -->
+<section class="hero-gradient seal-pattern relative overflow-hidden text-white">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center relative z-10">
+    <div>
+      <div class="logo-trio mb-6">
+        <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" />
+        <div class="logo-divider"></div>
+        <img src="assets/images/logos/logo-pov.png" alt="Logo Parlemen of Vision" />
+        <div class="logo-divider"></div>
+        <img src="assets/images/logos/logo-unand.png" alt="Logo Universitas Andalas" />
+      </div>
+      <span class="pasal-tag">§ Periode 2025 / 2026</span>
+      <h1 class="font-display font-extrabold text-4xl md:text-6xl mt-6 leading-tight">
+        Parlemen<br/>of <span style="color: var(--pov-gold-300);">Vision</span>
+      </h1>
+      <p class="mt-6 text-lg text-purple-100 max-w-lg">
+        Dewan Perwakilan Mahasiswa KM FMIPA Universitas Andalas — mewujudkan lembaga
+        legislatif yang <b>berintegritas</b> dan <b>berbasis digital</b> demi pengawasan
+        yang berkualitas untuk KM FMIPA.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="#senyap" class="btn-gold">
+          <i data-lucide="shield-alert" class="w-4 h-4"></i> Kirim Aspirasi (SENYAP)
+        </a>
+        <a href="smart-law-center.html" class="btn-outline" style="border-color:white; color:white;">
+          <i data-lucide="search" class="w-4 h-4"></i> Cari UU KM FMIPA
+        </a>
+      </div>
+
+      <div class="mt-10 flex items-center gap-6 text-sm text-purple-200">
+        <div><span class="font-display text-2xl font-bold text-white">23</span> Fungsionaris</div>
+        <div class="w-px h-8 bg-white/20"></div>
+        <div><span class="font-display text-2xl font-bold text-white">3</span> Komisi</div>
+        <div class="w-px h-8 bg-white/20"></div>
+        <div><span class="font-display text-2xl font-bold text-white">3</span> Biro</div>
+      </div>
+    </div>
+
+    <div class="relative hidden md:block">
+      <div class="clip-pentagon w-full aspect-square bg-white/5 border border-white/15 backdrop-blur flex items-center justify-center">
+        <div class="text-center px-10">
+          <p class="section-eyebrow text-purple-200">Visi Parlemen</p>
+          <p class="font-display text-xl mt-3 leading-snug text-white/90">
+            "Mewujudkan DPM KM FMIPA sebagai Lembaga Legislatif yang Berintegritas
+            dan Berbasis Digital guna Terciptanya Pengawasan yang Berkualitas
+            untuk KM FMIPA"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TENTANG KAMI ============ -->
+<section class="max-w-7xl mx-auto px-5 md:px-8 py-20 md:py-28">
+  <div class="max-w-2xl mx-auto text-center reveal">
+    <p class="section-eyebrow">Tentang Kami</p>
+    <h2 class="font-display text-3xl md:text-4xl font-bold mt-3" style="color: var(--pov-purple-900);">
+      Fungsi & Sejarah DPM KM FMIPA UNAND
+    </h2>
+    <p class="mt-4" style="color: var(--pov-ink-soft);">
+      DPM KM FMIPA UNAND merupakan Lembaga Tinggi Negara dalam sistem Negara Mahasiswa FMIPA UNAND.
+      Sebagai bagian dari KM FMIPA UNAND yang telah berdiri sejak 10 Oktober 2004, kami memegang peran krusial
+      sebagai pilar legislasi, wadah aspirasi, dan pengawas independen bagi eksekutif demi tegaknya kedaulatan di tangan Warga Negara MIPA.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6 mt-14">
+    <div class="card p-8 reveal">
+      <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-5" style="background: var(--pov-purple-100);">
+        <i data-lucide="scale" class="w-6 h-6" style="color: var(--pov-purple-900);"></i>
+      </div>
+      <h3 class="font-display font-bold text-xl mb-2">Legislasi</h3>
+      <p class="text-sm" style="color: var(--pov-ink-soft);">
+        Bertugas menyusun, meninjau, dan mengamandemen produk hukum — mulai dari UUD
+        hingga berbagai Undang-Undang sektoral. Proses ini dijalankan secara inklusif melalui
+        Badan Legislatif (Baleg) yang melibatkan fungsionaris DPM dan unsur masyarakat KM FMIPA UNAND.
+      </p>
+    </div>
+    <div class="card p-8 reveal" style="transition-delay: .1s;">
+      <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-5" style="background: var(--pov-purple-100);">
+        <i data-lucide="eye" class="w-6 h-6" style="color: var(--pov-purple-900);"></i>
+      </div>
+      <h3 class="font-display font-bold text-xl mb-2">Pengawasan</h3>
+      <p class="text-sm" style="color: var(--pov-ink-soft);">
+        Menjalankan mandat untuk mengawasi pelaksanaan undang-undang, transparansi keuangan,
+        serta kinerja dan kebijakan BEM KM FMIPA UNAND. Pengawasan dilakukan secara objektif melalui
+        sistem penilaian berkala, mencakup Penilaian Awal, Tengah, Akhir, hingga penilaian insidental jika diperlukan. 
+      </p>
+    </div>
+    <div class="card p-8 reveal" style="transition-delay: .2s;">
+      <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-5" style="background: var(--pov-purple-100);">
+        <i data-lucide="megaphone" class="w-6 h-6" style="color: var(--pov-purple-900);"></i>
+      </div>
+      <h3 class="font-display font-bold text-xl mb-2">Aspirasi</h3>
+      <p class="text-sm" style="color: var(--pov-ink-soft);">
+        Menjadi rumah resmi bagi mahasiswa untuk menyalurkan suara, keluhan, dan pendapat terkait isu akademik maupun kesejahteraan.
+        Seluruh aspirasi dikelola secara aman dan rahasia melalui sistem SENYAP (Sistem Penyaluran Aspirasi)
+        untuk diperjuangkan solusinya kepada pihak terkait.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SENYAP BANNER ============ -->
+<section id="senyap" class="max-w-7xl mx-auto px-5 md:px-8">
+  <div class="rounded-2xl p-10 md:p-14 text-white relative overflow-hidden hero-gradient reveal">
+    <div class="relative z-10 md:flex items-center justify-between gap-8">
+      <div class="max-w-xl">
+        <span class="pasal-tag">Sistem Penyaluran Aspirasi Online</span>
+        <h3 class="font-display text-3xl font-bold mt-4">SENYAP</h3>
+        <p class="mt-3 text-purple-100">
+          Punya keluhan akademik, fasilitas, atau dana kemahasiswaan? Sampaikan secara
+          <b> anonim dan aman</b>. Aspirasimu langsung kami kurasi dan salurkan ke komisi terkait.
+        </p>
+      </div>
+      <a href="#" id="senyap-link" target="_blank" rel="noopener" class="btn-gold mt-8 md:mt-0 shrink-0">
+        <i data-lucide="send" class="w-4 h-4"></i> Isi Formulir SENYAP
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTAGRAM FEED ============ -->
+<section class="max-w-7xl mx-auto px-5 md:px-8 py-20 md:py-28">
+  <div class="flex items-end justify-between flex-wrap gap-4 mb-10 reveal">
+    <div>
+      <p class="section-eyebrow">Media Sosial</p>
+      <h2 class="font-display text-3xl font-bold mt-2" style="color: var(--pov-purple-900);">
+        Konten Terbaru @dpmkmfmipaua
+      </h2>
+    </div>
+    <a href="https://instagram.com/dpmkmfmipaua" target="_blank" rel="noopener" class="btn-outline text-sm">
+      <i data-lucide="instagram" class="w-4 h-4"></i> Kunjungi Instagram
+    </a>
+  </div>
+
+  <!-- ===== WIDGET ELFSIGHT INSTAGRAM FEED ===== -->
+  <script src="https://elfsightcdn.com/platform.js" async></script>
+  <div class="elfsight-app-9c3f75f1-13ca-413e-adf0-efa729419d0c" data-elfsight-app-lazy></div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="text-white" style="background: var(--pov-purple-950);">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 pt-14">
+    <div class="logo-trio">
+      <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" />
+      <div class="logo-divider"></div>
+      <img src="assets/images/logos/logo-pov.png" alt="Logo Parlemen of Vision" />
+      <div class="logo-divider"></div>
+      <img src="assets/images/logos/logo-unand.png" alt="Logo Universitas Andalas" />
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-5 md:px-8 pb-14 pt-8 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center gap-3 mb-4">
+        <img src="assets/images/logos/logo-pov.png" alt="Logo Parlemen of Vision" class="w-10 h-10 object-contain" />
+        <p class="font-display font-bold">Parlemen of Vision</p>
+      </div>
+      <p class="text-sm text-purple-200">DPM KM FMIPA Universitas Andalas — Periode 2025/2026.</p>
+    </div>
+    <div>
+      <p class="font-semibold mb-3 text-sm tracking-wide" style="color: var(--pov-gold-300);">NAVIGASI</p>
+      <ul class="space-y-2 text-sm text-purple-200">
+        <li><a href="pengurus.html" class="hover:text-white">Struktur Pengurus</a></li>
+        <li><a href="smart-law-center.html" class="hover:text-white">Buku Undang-Undang</a></li>
+        <li><a href="wall-of-appreciation.html" class="hover:text-white">Papan Apresiasi & Donasi</a></li>
+        <li><a href="katalog-jasa.html" class="hover:text-white">Katalog Jasa Digital</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-semibold mb-3 text-sm tracking-wide" style="color: var(--pov-gold-300);">KONTAK</p>
+      <ul class="space-y-2 text-sm text-purple-200">
+        <li id="footer-alamat"></li>
+        <li id="footer-telp"></li>
+        <li id="footer-email"></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-semibold mb-3 text-sm tracking-wide" style="color: var(--pov-gold-300);">IKUTI KAMI</p>
+      <a href="https://instagram.com/dpmkmfmipaua" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm text-purple-200 hover:text-white">
+        <i data-lucide="instagram" class="w-4 h-4"></i> @dpmkmfmipaua
+      </a>
+    </div>
+  </div>
+  <div class="border-t border-white/10 py-5 text-center text-xs text-purple-300">
+    &copy; <span id="footer-year"></span> DPM KM FMIPA UNAND — Parlemen of Vision. Seluruh hak cipta dilindungi.
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  document.getElementById("senyap-link").href = CONFIG.senyapFormUrl;
+  document.getElementById("footer-alamat").textContent = CONFIG.alamat;
+  document.getElementById("footer-telp").textContent = CONFIG.telepon;
+  document.getElementById("footer-email").textContent = CONFIG.email;
+  lucide.createIcons();
+</script>
+</body>
+</html>

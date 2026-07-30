@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Papan Apresiasi & Donasi — DPM KM FMIPA UNAND</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="icon" type="image/png" href="assets/images/logos/logo-pov.png" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b" style="border-color: var(--pov-border);">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between h-20">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" class="w-12 h-12 object-contain" />
+      <div class="leading-tight">
+        <p class="font-display font-bold text-lg" style="color: var(--pov-purple-900);">DPM KM FMIPA</p>
+        <p class="text-xs tracking-wide" style="color: var(--pov-gold-500);">PARLEMEN OF VISION</p>
+      </div>
+    </a>
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="index.html" data-nav="index.html" class="nav-link">Beranda</a>
+      <a href="pengurus.html" data-nav="pengurus.html" class="nav-link">Struktur Pengurus</a>
+      <a href="hall-of-fame.html" data-nav="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
+      <a href="smart-law-center.html" data-nav="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
+      <a href="wall-of-appreciation.html" data-nav="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
+      <a href="katalog-jasa.html" data-nav="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
+    </nav>
+    <a href="index.html#senyap" class="hidden md:inline-flex btn-primary text-sm">
+      <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
+    </a>
+    <button id="mobile-menu-btn" class="md:hidden" aria-label="Buka menu" aria-expanded="false">
+      <i data-lucide="menu" class="w-7 h-7" style="color: var(--pov-purple-900);"></i>
+    </button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden border-t px-5 py-4 flex flex-col gap-4 bg-white" style="border-color: var(--pov-border);">
+    <a href="index.html" class="nav-link">Beranda</a>
+    <a href="pengurus.html" class="nav-link">Struktur Pengurus</a>
+    <a href="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
+    <a href="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
+    <a href="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
+    <a href="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
+  </div>
+</header>
+
+<section class="hero-gradient seal-pattern text-white py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 md:flex items-end justify-between gap-8">
+    <div>
+      <span class="pasal-tag">§ Parliament Alumni & Public Network</span>
+      <h1 class="font-display font-extrabold text-3xl md:text-5xl mt-5">Papan Apresiasi & Donasi</h1>
+      <p class="mt-4 text-purple-100 max-w-xl">
+        Bentuk transparansi donasi untuk Dana Abadi Parlemen — terbuka untuk
+        <b>alumni maupun publik</b> yang ingin turut mendukung independensi dan
+        program kerja DPM KM FMIPA UNAND.
+      </p>
+    </div>
+    <a href="#" id="donasi-cta" target="_blank" rel="noopener" class="btn-gold mt-8 md:mt-0 shrink-0">
+      <i data-lucide="heart-handshake" class="w-4 h-4"></i> Klik untuk Berdonasi
+    </a>
+  </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-5 md:px-8 py-14">
+  <!-- Progress -->
+  <div class="card p-8 reveal in-view">
+    <div class="flex items-end justify-between flex-wrap gap-2 mb-4">
+      <div>
+        <p class="section-eyebrow">Target Dana Abadi Parlemen</p>
+        <p class="font-display text-3xl font-bold mt-1" id="progress-current" style="color: var(--pov-purple-900);"></p>
+      </div>
+      <p class="text-sm" style="color: var(--pov-ink-soft);">Target: <span id="progress-target" class="font-semibold"></span></p>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
+    </div>
+    <p class="text-xs mt-2" id="progress-percent" style="color: var(--pov-ink-soft);"></p>
+
+    <div class="mt-6 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4" style="border-color: var(--pov-border);">
+      <p class="text-sm" style="color: var(--pov-ink-soft);">
+        <i data-lucide="users" class="w-4 h-4 inline -mt-1 mr-1"></i>
+        Ingin berdonasi? Terbuka untuk <b>alumni maupun masyarakat umum</b>.
+      </p>
+      <a href="#" id="donasi-cta-2" target="_blank" rel="noopener" class="btn-primary shrink-0">
+        <i data-lucide="heart-handshake" class="w-4 h-4"></i> Silakan Klik di Sini untuk Berdonasi
+      </a>
+    </div>
+  </div>
+
+  <!-- List donatur -->
+  <div class="mt-10">
+    <h2 class="font-display font-bold text-2xl mb-6" style="color: var(--pov-purple-900);">Riwayat Donatur</h2>
+    <div id="donor-list" class="space-y-4"></div>
+  </div>
+</section>
+
+<footer class="text-white" style="background: var(--pov-purple-950);">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 pt-10">
+    <div class="logo-trio justify-center md:justify-start">
+      <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" />
+      <div class="logo-divider"></div>
+      <img src="assets/images/logos/logo-pov.png" alt="Logo Parlemen of Vision" />
+      <div class="logo-divider"></div>
+      <img src="assets/images/logos/logo-unand.png" alt="Logo Universitas Andalas" />
+    </div>
+    <p class="text-xs text-purple-300 mt-3 text-center md:text-left">
+      DPM KM FMIPA UNAND &middot; Parlemen of Vision &middot; di bawah naungan Universitas Andalas
+    </p>
+  </div>
+  <div class="max-w-7xl mx-auto px-5 md:px-8 py-6 mt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-purple-200">&copy; <span id="footer-year"></span> DPM KM FMIPA UNAND — Parlemen of Vision.</p>
+    <a href="https://instagram.com/dpmkmfmipaua" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm text-purple-200 hover:text-white">
+      <i data-lucide="instagram" class="w-4 h-4"></i> @dpmkmfmipaua
+    </a>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  function formatRupiah(n) {
+    return "Rp" + n.toLocaleString("id-ID");
+  }
+
+  document.getElementById("donasi-cta").href = CONFIG.donasiLink;
+  document.getElementById("donasi-cta-2").href = CONFIG.donasiLink;
+
+  const totalTerkumpul = DONASI_LIST.reduce((sum, d) => sum + d.jumlah, 0);
+  const persen = Math.min(100, (totalTerkumpul / DONASI_TARGET) * 100);
+
+  document.getElementById("progress-current").textContent = formatRupiah(totalTerkumpul);
+  document.getElementById("progress-target").textContent = formatRupiah(DONASI_TARGET);
+  document.getElementById("progress-percent").textContent = `${persen.toFixed(1)}% dari target tercapai`;
+
+  // animasi width setelah render
+  requestAnimationFrame(() => {
+    document.getElementById("progress-bar").style.width = persen + "%";
+  });
+
+  const donorList = document.getElementById("donor-list");
+  const sorted = [...DONASI_LIST].reverse(); // terbaru di atas
+
+  donorList.innerHTML = sorted.map(d => `
+    <div class="card p-5 flex items-start gap-4 reveal in-view">
+      <div class="avatar-fallback w-11 h-11 rounded-full text-sm shrink-0">${initials(d.nama)}</div>
+      <div class="flex-1">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <p class="font-semibold">${d.nama}</p>
+          <span class="font-mono text-sm font-bold" style="color: var(--pov-purple-700);">${formatRupiah(d.jumlah)}</span>
+        </div>
+        <p class="text-sm mt-1 italic" style="color: var(--pov-ink-soft);">"${d.pesan}"</p>
+      </div>
+    </div>
+  `).join("") || `<p style="color: var(--pov-ink-soft);">Belum ada donasi yang tercatat.</p>`;
+
+  lucide.createIcons();
+</script>
+</body>
+</html>

@@ -187,6 +187,6 @@ CONFIG.mapsUrl = `https://www.google.com/maps/search/?api=1&query=${CONFIG.sekre
 
 // Link WhatsApp dengan Pesan Otomatis
 const pesanWA = encodeURIComponent("Halo DPM KM FMIPA UNAND, saya... ingin bertanya mengenai...");
-CONFIG.teleponTelUrl = "https://wa.me/6282389338148" + CONFIG.telepon.replace(/\D/g, "").replace(/^0/, "") + "?text=" + pesanWA;
+CONFIG.teleponTelUrl = "https://wa.me/62" + CONFIG.telepon.replace(/\D/g, "").replace(/^0/, "") + "?text=" + pesanWA;
 
 CONFIG.emailMailtoUrl = "mailto:" + CONFIG.email;

@@ -6,10 +6,6 @@
    =================================================================== */
 
 // ============ 1. DATA PENGURUS AKTIF PERIODE 2025/2026 ============
-// kategori dipakai untuk filter: "inti", "komisi1", "komisi2", "komisi3",
-// "infokom", "adm", "mitu"
-// Field "instagram": isi dengan URL profil IG pribadi masing-masing, contoh:
-// "https://instagram.com/username" — kosongkan jadi null kalau belum ada.
 const PENGURUS_AKTIF = [
   // --- PIMPINAN INTI (PRESIDIUM) ---
   { nama: "Agid Al Syah Putra", jabatan: "Ketua Umum", kategori: "inti", jurusan: "Fisika", angkatan: 2023, foto: "assets/images/agid.png", instagram: "https://www.instagram.com/agidal_?igsh=azNsdTI4N3hwdjJm" },
@@ -61,8 +57,6 @@ const KATEGORI_INFO = {
 };
 
 // ============ 2. Galeri Demisioner — DEMISIONER PERIODE SEBELUMNYA ============
-// CONTOH DATA — silakan ganti dengan data asli periode-periode sebelumnya.
-// Cukup tambah/hapus objek di dalam array `pengurusInti` tiap periode.
 const DEMISIONER = [
   {
     periode: "2024/2025",
@@ -93,8 +87,6 @@ const DEMISIONER = [
 ];
 
 // ============ 3. Buku Undang-Undang — DATA UU / PASAL ============
-// CONTOH DATA — ganti dengan isi pasal UU/UUD KM FMIPA yang sesungguhnya.
-// Field "isi" adalah cuplikan singkat; taruh file PDF asli di /docs untuk tombol download.
 const DATA_UU = [
   {
     kode: "UUD Pasal 25",
@@ -135,7 +127,6 @@ const DATA_UU = [
 ];
 
 // ============ 4. Papan Apresiasi & Donasi — DATA DONASI ============
-// CONTOH DATA — hubungkan ke Google Sheets/Supabase nanti kalau sudah live.
 const DONASI_TARGET = 10000000; // Target Dana Abadi Alumni (Rp)
 
 const DONASI_LIST = [
@@ -170,17 +161,32 @@ const JASA_DIGITAL = [
 const CONFIG = {
   instagram: "https://instagram.com/dpmkmfmipaua",
   senyapFormUrl: "https://forms.cloud.microsoft/r/1Ti6kEQmKF",
-  uudPdfPath: "https://drive.google.com/file/d/1eON6bIqOaoIcCdExDRbY4-y5g9fDl92Z/view?fbclid=PAdGRleATVaYRwZG9mAmV4dG4DYWVtAjExAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp8iBqjTM6L4D0aFWAPSe28oxLsOaJrmNj2XiCk8Wy42ByPFy9QVnf0WTGVJl_aem_6aAQDJxghJfmAqS2-HqZGw",
+  uudPdfPath: "docs/UUD-KM-FMIPA-UNAND.pdf",
   email: "dpm@sci.unand.id",
   telepon: "0823 8933 8148",
   alamat: "Gedung PKM FMIPA Kampus Limau Manis, Padang 25163",
 
-  // Link donasi (Papan Apresiasi & Donasi) — bisa dituju ke Saweria/Trakteer/QRIS/
-  // rekening resmi/Google Form pendataan donatur. Terbuka untuk ALUMNI & PUBLIK.
+  // Koordinat Sekretariat DPM (dipakai oleh absensi-harian.html untuk validasi GPS)
+  sekreLat: -0.9101815659507473,
+  sekreLng: 100.46044578717425,
+
+  // Link donasi
   donasiLink: "SEGERA_HADIR",
 
-  // Path file logo (taruh file asli di assets/images/logos/)
-  logoDpm: "assets/images/logos/logo-dpm.png",   // Logo resmi DPM (permanen)
-  logoPov: "assets/images/logos/logo-pov.png",   // Logo Parlemen of Vision (khusus periode ini)
-  logoUnand: null, // Taruh file asli di assets/images/logos/logo-unand.png lalu isi path di sini
+  // Path file logo
+  logoDpm: "assets/images/logos/logo-dpm.png",     // Logo resmi DPM
+  logoPov: "assets/images/logos/logo-pov.png",     // Logo Parlemen of Vision
+  logoUnand: "assets/images/logos/logo-unand.png", // Logo Universitas Andalas
+
+  // Halaman internal fungsionaris
+  absensiHarianUrl: "absensi-harian.html",
 };
+
+// Helper Link Google Maps, WhatsApp & Mailto
+CONFIG.mapsUrl = `https://www.google.com/maps/search/?api=1&query=${CONFIG.sekreLat},${CONFIG.sekreLng}`;
+
+// Link WhatsApp dengan Pesan Otomatis
+const pesanWA = encodeURIComponent("Halo DPM KM FMIPA UNAND, saya... ingin bertanya mengenai...");
+CONFIG.teleponTelUrl = "https://wa.me/6282389338148" + CONFIG.telepon.replace(/\D/g, "").replace(/^0/, "") + "?text=" + pesanWA;
+
+CONFIG.emailMailtoUrl = "mailto:" + CONFIG.email;

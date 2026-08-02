@@ -40,9 +40,14 @@
       <a href="katalog-jasa.html" data-nav="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
     </nav>
 
-    <a href="#senyap" class="hidden md:inline-flex btn-primary text-sm">
-      <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
-    </a>
+    <div class="hidden md:flex items-center gap-3">
+      <a href="absensi-harian.html" class="btn-outline text-sm">
+        <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
+      </a>
+      <a href="#" id="nav-senyap-btn" target="_blank" rel="noopener" class="btn-primary text-sm">
+        <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
+      </a>
+    </div>
 
     <button id="mobile-menu-btn" class="md:hidden" aria-label="Buka menu" aria-expanded="false">
       <i data-lucide="menu" class="w-7 h-7" style="color: var(--pov-purple-900);"></i>
@@ -56,12 +61,17 @@
     <a href="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
     <a href="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
     <a href="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
-    <a href="#senyap" class="btn-primary justify-center text-sm">Kirim Aspirasi (SENYAP)</a>
+    <a href="absensi-harian.html" class="btn-outline justify-center text-sm">
+      <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
+    </a>
+    <a href="#" id="mobile-senyap-btn" target="_blank" rel="noopener" class="btn-primary justify-center text-sm">
+      <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi (SENYAP)
+    </a>
   </div>
 </header>
 
 <!-- ============ HERO SECTION ============ -->
-<section class="hero-gradient seal-pattern relative overflow-hidden text-white">
+<section class="hero-gradient seal-pattern hero-fade-bottom text-white">
   <div class="max-w-7xl mx-auto px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center relative z-10">
     <div>
       <div class="logo-trio mb-6">
@@ -82,7 +92,7 @@
       </p>
 
       <div class="mt-8 flex flex-wrap gap-4">
-        <a href="#senyap" class="btn-gold">
+        <a href="#" id="hero-senyap-btn" target="_blank" rel="noopener" class="btn-gold">
           <i data-lucide="shield-alert" class="w-4 h-4"></i> Kirim Aspirasi (SENYAP)
         </a>
         <a href="smart-law-center.html" class="btn-outline" style="border-color:white; color:white;">
@@ -92,9 +102,9 @@
 
       <div class="mt-10 flex items-center gap-6 text-sm text-purple-200">
         <div><span class="font-display text-2xl font-bold text-white">23</span> Fungsionaris</div>
-        <div class="w-px h-8 bg-white/20"></div>
+        <div class="w-px h-8 stat-divider"></div>
         <div><span class="font-display text-2xl font-bold text-white">3</span> Komisi</div>
-        <div class="w-px h-8 bg-white/20"></div>
+        <div class="w-px h-8 stat-divider"></div>
         <div><span class="font-display text-2xl font-bold text-white">3</span> Biro</div>
       </div>
     </div>
@@ -148,7 +158,7 @@
       <p class="text-sm" style="color: var(--pov-ink-soft);">
         Menjalankan mandat untuk mengawasi pelaksanaan undang-undang, transparansi keuangan,
         serta kinerja dan kebijakan BEM KM FMIPA UNAND. Pengawasan dilakukan secara objektif melalui
-        sistem penilaian berkala, mencakup Penilaian Awal, Tengah, Akhir, hingga penilaian insidental jika diperlukan. 
+        sistem penilaian berkala, mencakup Penilaian Awal, Tengah, Akhir, hingga penilaian insidental jika diperlukan.
       </p>
     </div>
     <div class="card p-8 reveal" style="transition-delay: .2s;">
@@ -233,10 +243,22 @@
     </div>
     <div>
       <p class="font-semibold mb-3 text-sm tracking-wide" style="color: var(--pov-gold-300);">KONTAK</p>
-      <ul class="space-y-2 text-sm text-purple-200">
-        <li id="footer-alamat"></li>
-        <li id="footer-telp"></li>
-        <li id="footer-email"></li>
+      <ul class="space-y-2.5 text-sm text-purple-200">
+        <li>
+          <a id="footer-alamat" href="#" target="_blank" rel="noopener" class="inline-flex items-start gap-2 hover:text-white transition">
+            <i data-lucide="map-pin" class="w-4 h-4 shrink-0 mt-0.5"></i> <span></span>
+          </a>
+        </li>
+        <li>
+          <a id="footer-telp" href="#" class="inline-flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="phone" class="w-4 h-4 shrink-0"></i> <span></span>
+          </a>
+        </li>
+        <li>
+          <a id="footer-email" href="#" class="inline-flex items-center gap-2 hover:text-white transition">
+            <i data-lucide="mail" class="w-4 h-4 shrink-0"></i> <span></span>
+          </a>
+        </li>
       </ul>
     </div>
     <div>
@@ -254,10 +276,26 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
+  // Tombol "Kirim Aspirasi" (navbar desktop, mobile menu, hero) → LANGSUNG ke Microsoft Form,
+  // tidak lagi cuma scroll ke section SENYAP di halaman.
+  document.getElementById("nav-senyap-btn").href = CONFIG.senyapFormUrl;
+  document.getElementById("mobile-senyap-btn").href = CONFIG.senyapFormUrl;
+  document.getElementById("hero-senyap-btn").href = CONFIG.senyapFormUrl;
   document.getElementById("senyap-link").href = CONFIG.senyapFormUrl;
-  document.getElementById("footer-alamat").textContent = CONFIG.alamat;
-  document.getElementById("footer-telp").textContent = CONFIG.telepon;
-  document.getElementById("footer-email").textContent = CONFIG.email;
+
+  // Kontak — semua langsung bisa diklik/tap:
+  const alamatEl = document.getElementById("footer-alamat");
+  alamatEl.href = CONFIG.mapsUrl;
+  alamatEl.querySelector("span").textContent = CONFIG.alamat;
+
+  const telpEl = document.getElementById("footer-telp");
+  telpEl.href = CONFIG.teleponTelUrl;
+  telpEl.querySelector("span").textContent = CONFIG.telepon;
+
+  const emailEl = document.getElementById("footer-email");
+  emailEl.href = CONFIG.emailMailtoUrl;
+  emailEl.querySelector("span").textContent = CONFIG.email;
+
   lucide.createIcons();
 </script>
 </body>

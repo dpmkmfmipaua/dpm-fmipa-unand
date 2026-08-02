@@ -30,9 +30,14 @@
       <a href="wall-of-appreciation.html" data-nav="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
       <a href="katalog-jasa.html" data-nav="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
     </nav>
-    <a href="index.html#senyap" class="hidden md:inline-flex btn-primary text-sm">
-      <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
-    </a>
+    <div class="hidden md:flex items-center gap-3">
+      <a href="absensi-harian.html" class="btn-outline text-sm">
+        <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
+      </a>
+      <a href="#" id="nav-senyap-btn" target="_blank" rel="noopener" class="btn-primary text-sm">
+        <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
+      </a>
+    </div>
     <button id="mobile-menu-btn" class="md:hidden" aria-label="Buka menu" aria-expanded="false">
       <i data-lucide="menu" class="w-7 h-7" style="color: var(--pov-purple-900);"></i>
     </button>
@@ -44,10 +49,14 @@
     <a href="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
     <a href="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
     <a href="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
+    <a href="absensi-harian.html" class="btn-outline justify-center text-sm">
+      <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
+    </a>
+    <a href="#" id="mobile-senyap-btn" target="_blank" rel="noopener" class="btn-primary justify-center text-sm">Kirim Aspirasi (SENYAP)</a>
   </div>
 </header>
 
-<section class="hero-gradient seal-pattern text-white py-16 md:py-20">
+<section class="hero-gradient seal-pattern text-white py-16 md:py-20 hero-fade-bottom">
   <div class="max-w-7xl mx-auto px-5 md:px-8 md:flex items-end justify-between gap-8">
     <div>
       <span class="pasal-tag">§ Buku Undang-Undang</span>
@@ -102,6 +111,10 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
+  // Tombol "Kirim Aspirasi" langsung ke Microsoft Form
+  document.getElementById("nav-senyap-btn").href = CONFIG.senyapFormUrl;
+  document.getElementById("mobile-senyap-btn").href = CONFIG.senyapFormUrl;
+
   const input = document.getElementById("law-search");
   const results = document.getElementById("law-results");
   const countEl = document.getElementById("law-count");

@@ -16,15 +16,19 @@
 
 <!-- ============ NAVBAR ============ -->
 <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b" style="border-color: var(--pov-border);">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between h-20">
-    <a href="index.html" class="flex items-center gap-3">
-      <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" class="w-12 h-12 object-contain" />
-      <div class="leading-tight">
-        <p class="font-display font-bold text-lg" style="color: var(--pov-purple-900);">DPM KM FMIPA</p>
-        <p class="text-xs tracking-wide" style="color: var(--pov-gold-500);">PARLEMEN OF VISION</p>
+  <div class="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between h-20 gap-4">
+    
+    <!-- Brand Logo & Nama (Aman Laptop & HP) -->
+    <a href="index.html" class="flex items-center gap-3 shrink-0">
+      <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" class="w-11 h-11 object-contain" />
+      <div class="flex flex-col justify-center leading-tight">
+        <p class="font-display font-bold text-base md:text-lg whitespace-nowrap" style="color: var(--pov-purple-900);">DPM KM FMIPA</p>
+        <p class="text-[10px] md:text-xs font-semibold tracking-wider whitespace-nowrap mt-0.5" style="color: var(--pov-gold-500);">PARLEMEN OF VISION</p>
       </div>
     </a>
-    <nav class="hidden md:flex items-center gap-8">
+
+    <!-- Menu Navigasi Desktop (Jarak Fleksibel) -->
+    <nav class="hidden md:flex items-center gap-4 lg:gap-6 text-sm font-medium">
       <a href="index.html" data-nav="index.html" class="nav-link">Beranda</a>
       <a href="pengurus.html" data-nav="pengurus.html" class="nav-link">Struktur Pengurus</a>
       <a href="hall-of-fame.html" data-nav="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
@@ -32,18 +36,25 @@
       <a href="wall-of-appreciation.html" data-nav="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
       <a href="katalog-jasa.html" data-nav="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
     </nav>
-    <div class="hidden md:flex items-center gap-3">
-      <a href="absensi-harian.html" class="btn-outline text-sm">
+
+    <!-- Tombol Aksi Desktop -->
+    <div class="hidden md:flex items-center gap-2.5 shrink-0">
+      <a href="absensi-harian.html" class="btn-outline text-xs lg:text-sm px-3 py-2">
         <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
       </a>
-      <a href="#" id="nav-senyap-btn" target="_blank" rel="noopener" class="btn-primary text-sm">
+      <a href="#" id="nav-senyap-btn" target="_blank" rel="noopener" class="btn-primary text-xs lg:text-sm px-3.5 py-2">
         <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
       </a>
     </div>
-    <button id="mobile-menu-btn" class="md:hidden" aria-label="Buka menu" aria-expanded="false">
-      <i data-lucide="menu" class="w-7 h-7" style="color: var(--pov-purple-900);"></i>
+
+    <!-- Tombol Menu Mobile / HP -->
+    <button id="mobile-menu-btn" class="md:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50 active:bg-purple-100 transition shrink-0" aria-label="Buka menu" aria-expanded="false">
+      <i data-lucide="menu" class="w-5 h-5" style="color: var(--pov-purple-900);"></i>
+      <span class="text-xs font-semibold tracking-wide uppercase" style="color: var(--pov-purple-900);">Menu</span>
     </button>
   </div>
+
+  <!-- Mobile Menu Dropdown -->
   <div id="mobile-menu" class="hidden md:hidden border-t px-5 py-4 flex flex-col gap-4 bg-white" style="border-color: var(--pov-border);">
     <a href="index.html" class="nav-link">Beranda</a>
     <a href="pengurus.html" class="nav-link">Struktur Pengurus</a>
@@ -54,7 +65,9 @@
     <a href="absensi-harian.html" class="btn-outline justify-center text-sm">
       <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
     </a>
-    <a href="#" id="mobile-senyap-btn" target="_blank" rel="noopener" class="btn-primary justify-center text-sm">Kirim Aspirasi (SENYAP)</a>
+    <a href="#" id="mobile-senyap-btn" target="_blank" rel="noopener" class="btn-primary justify-center text-sm">
+      <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi (SENYAP)
+    </a>
   </div>
 </header>
 

@@ -32,8 +32,6 @@
 <link rel="stylesheet" href="assets/css/style.css" />
 
 <style>
-  /* Extra styling khusus halaman ini — SEMUA warna diselaraskan ke tema
-     merah/maroon PoV (tidak ada slate/abu-biru atau warna gelap lain lagi) */
   .hero-pov-bg {
     background: linear-gradient(135deg, var(--pov-purple-950) 0%, #5A1810 45%, var(--pov-purple-900) 100%);
   }
@@ -61,7 +59,6 @@
   }
 </style>
 
-<!-- Schema Markup AI & SEO -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -108,7 +105,6 @@
       </button>
     </div>
 
-    <!-- Mobile menu (sebelumnya belum ada — inilah yang bikin tombol hamburger tidak berfungsi) -->
     <div id="mobile-menu" class="hidden md:hidden border-t px-5 py-4 flex flex-col gap-4 bg-white" style="border-color: var(--pov-border);">
       <a href="index.html" class="nav-link">Beranda</a>
       <a href="pengurus.html" class="nav-link">Struktur Pengurus</a>
@@ -128,7 +124,6 @@
 
   <!-- ============ HERO BANNER ============ -->
   <section class="hero-pov-bg text-white pt-10 pb-28 md:pt-14 md:pb-36 relative overflow-hidden">
-    <!-- Hiasan Background Pattern -->
     <div class="absolute inset-0 opacity-10 pointer-events-none flex justify-center items-center">
       <div class="w-[600px] h-[600px] border rounded-full animate-pulse" style="border-color: rgba(228,201,122,0.3);"></div>
     </div>
@@ -150,7 +145,7 @@
   <!-- ============ MAIN CONTENT CONTAINER ============ -->
   <main class="max-w-6xl mx-auto px-4 sm:px-6 -mt-20 md:-mt-24 relative z-20 mb-16">
 
-    <!-- CARD 1: FORM LOGIN (Tampil jika belum login) -->
+    <!-- CARD 1: FORM LOGIN -->
     <div id="section-login" class="glass-card p-8 md:p-10 max-w-md mx-auto rounded-3xl shadow-2xl border border-white/40">
       <div class="text-center mb-8">
         <div class="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-inner" style="background: linear-gradient(135deg, var(--pov-purple-900) 0%, var(--pov-purple-950) 100%);">
@@ -183,10 +178,8 @@
       </form>
     </div>
 
-    <!-- CARD 2: AREA ABSENSI (Tampil setelah login - Layout 2 Kolom Laptop) -->
+    <!-- CARD 2: AREA ABSENSI -->
     <div id="section-absen" class="hidden space-y-6">
-
-      <!-- Status GPS Bar -->
       <div id="gps-status-box" class="p-4 rounded-2xl border shadow-md flex items-center justify-between bg-amber-50/90 border-amber-200 backdrop-blur" style="color: var(--pov-purple-950);">
         <div class="flex items-center gap-3">
           <div class="p-2 rounded-xl" style="background: var(--pov-purple-100);">
@@ -202,10 +195,7 @@
         </button>
       </div>
 
-      <!-- Grid 2 Kolom Laptop -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-
-        <!-- Kiri: Kamera & Action Button (7 Kolom) -->
         <div class="lg:col-span-7 card p-6">
           <div class="flex items-center justify-between mb-4">
             <h3 class="font-display font-bold text-lg flex items-center gap-2" style="color: var(--pov-ink);">
@@ -214,12 +204,9 @@
             <span class="text-[11px] font-mono px-2.5 py-1 rounded-md" style="background: var(--pov-purple-100); color: var(--pov-purple-900);">LIVE WEBCAM</span>
           </div>
 
-          <!-- Video Stream Live Kamera -->
           <div class="camera-frame relative aspect-[4/3] md:aspect-video rounded-2xl overflow-hidden shadow-inner mb-5 group">
             <video id="webcam" autoplay playsinline class="w-full h-full object-cover"></video>
             <canvas id="canvas" class="hidden"></canvas>
-
-            <!-- Overlay Bingkai Kamera -->
             <div class="absolute inset-4 border-2 border-white/20 rounded-xl pointer-events-none flex flex-col justify-between p-3">
               <div class="flex justify-between items-center text-[10px] text-white/60 font-mono">
                 <span>DPM KM FMIPA UNAND</span>
@@ -236,15 +223,11 @@
           </button>
         </div>
 
-        <!-- Kanan: Informasi Fungsionaris & Panduan (5 Kolom) -->
         <div class="lg:col-span-5 space-y-6">
-          <!-- Card Profile -->
           <div class="profile-card-maroon text-white p-6 rounded-3xl shadow-xl relative overflow-hidden">
             <div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full blur-2xl" style="background: rgba(228,201,122,0.12);"></div>
-
             <p class="text-[11px] font-mono font-semibold tracking-wider uppercase mb-1" style="color: var(--pov-gold-500);">Kartu Akses Presensi</p>
             <h4 id="profile-card-name" class="font-display font-bold text-xl text-white mb-4">Fungsionaris DPM</h4>
-
             <div class="space-y-2.5 text-xs border-t pt-4" style="border-color: rgba(228,201,122,0.2); color: rgba(255,255,255,0.75);">
               <div class="flex justify-between">
                 <span style="color: rgba(255,255,255,0.55);">Instansi:</span>
@@ -261,7 +244,6 @@
             </div>
           </div>
 
-          <!-- Card Panduan Absensi -->
           <div class="card p-6 text-xs space-y-3">
             <h5 class="font-bold text-sm flex items-center gap-2" style="color: var(--pov-ink);">
               <i data-lucide="info" class="w-4 h-4" style="color: var(--pov-purple-700);"></i> Ketentuan Absensi Sekre
@@ -273,15 +255,11 @@
             </ul>
           </div>
         </div>
-
       </div>
-
     </div>
-
   </main>
 </div>
 
-<!-- ============ FOOTER ============ -->
 <footer class="text-white border-t border-white/10" style="background: var(--pov-purple-950);">
   <div class="max-w-7xl mx-auto px-5 md:px-8 py-8 text-center text-xs" style="color: rgba(228,201,122,0.6);">
     &copy; <span id="footer-year"></span> DPM KM FMIPA UNAND — Parlemen of Vision. Absensi Harian Digital.
@@ -291,28 +269,22 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
-  // ==========================================
-  // 1. KONFIGURASI SUPABASE & SEKRE
-  // ==========================================
   const SUPABASE_URL = "https://fmvmxrdvhmrvirpocilm.supabase.co";
   const SUPABASE_KEY = "sb_publishable_KHum13R3OhyzsYj70LU-ZQ_a43fu670";
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // Titik Koordinat Sekre DPM FMIPA UNAND — diambil dari CONFIG (assets/js/data.js)
-  // supaya satu sumber data yang sama dipakai di seluruh website (termasuk link Maps di footer index.html)
   const SEKRE_LAT = CONFIG.sekreLat;
   const SEKRE_LNG = CONFIG.sekreLng;
-  const MAX_RADIUS_METER = 15; // Jarak toleransi maksimal (15 meter)
+  const MAX_RADIUS_METER = 15;
 
   let currentUser = null;
   let isLocationValid = false;
 
-  // Initial setup
   document.getElementById("footer-year").textContent = new Date().getFullYear();
   lucide.createIcons();
 
   // ==========================================
-  // 2. LOGIKA LOGIN & AUTHENTICATION
+  // LOGIKA LOGIN TERBARU (AUTO REDIRECT ADMIN)
   // ==========================================
   async function handleLogin(e) {
     e.preventDefault();
@@ -325,7 +297,14 @@
       alert("Login Gagal: " + error.message);
     } else {
       currentUser = data.user;
-      initPortal();
+      
+      // Jika email mengandung 'admin' atau 'sekretaris', lemparkan langsung ke Halaman Admin Absen!
+      const userEmail = currentUser.email.toLowerCase();
+      if (userEmail.includes("admin") || userEmail.includes("sekretaris")) {
+        window.location.href = "admin-absensi.html";
+      } else {
+        initPortal();
+      }
     }
   }
 
@@ -340,7 +319,6 @@
     document.getElementById("mobile-user-name").textContent = namaUser;
     document.getElementById("profile-card-name").textContent = namaUser.toUpperCase();
 
-    // Jalankan Kamera & Cek GPS
     startCamera();
     cekLokasiGPS();
   }
@@ -350,9 +328,6 @@
     location.reload();
   }
 
-  // ==========================================
-  // 3. LOGIKA KAMERA & GPS
-  // ==========================================
   async function startCamera() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
@@ -400,7 +375,6 @@
     }, { enableHighAccuracy: true });
   }
 
-  // Rumus Haversine (Menghitung Jarak GPS dalam Meter)
   function hitungJarak(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
     const φ1 = lat1 * Math.PI/180;
@@ -415,9 +389,6 @@
     return R * c;
   }
 
-  // ==========================================
-  // 4. WATERMARK & SUBMIT DATA ABSENSI
-  // ==========================================
   async function ambilFotoDanKirim() {
     if (!isLocationValid) return;
 
@@ -428,17 +399,15 @@
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    // 1. Ambil Gambar dari Video
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // 2. Tempelkan Watermark Teks di Bawah Foto
     const skrg = new Date().toLocaleString("id-ID");
     const namaUser = currentUser.email.split('@')[0];
 
-    ctx.fillStyle = "rgba(26, 13, 8, 0.75)"; // maroon gelap transparan, senada tema
+    ctx.fillStyle = "rgba(26, 13, 8, 0.75)";
     ctx.fillRect(0, canvas.height - 90, canvas.width, 90);
 
-    ctx.fillStyle = "#C9A227"; // Emas — senada tema PoV
+    ctx.fillStyle = "#C9A227";
     ctx.font = "bold 20px Inter, sans-serif";
     ctx.fillText(`DPM KM FMIPA UNAND — ${namaUser.toUpperCase()}`, 20, canvas.height - 52);
 
@@ -446,11 +415,9 @@
     ctx.font = "14px Inter, sans-serif";
     ctx.fillText(`Waktu: ${skrg} WIB | Verified at Sekre DPM FMIPA`, 20, canvas.height - 22);
 
-    // 3. Convert Canvas ke Blob Image & Upload ke Supabase
     canvas.toBlob(async (blob) => {
       const fileName = `absen_${Date.now()}_${namaUser}.jpg`;
 
-      // Upload Foto ke Bucket Supabase Storage
       const { data: uploadData, error: uploadErr } = await supabaseClient
         .storage
         .from('foto-piket')
@@ -461,13 +428,11 @@
         return;
       }
 
-      // Ambil Public URL Foto
       const { data: urlData } = supabaseClient
         .storage
         .from('foto-piket')
         .getPublicUrl(fileName);
 
-      // Simpan Log ke Tabel Database `piket_logs`
       const { error: dbErr } = await supabaseClient
         .from('piket_logs')
         .insert([

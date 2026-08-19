@@ -390,12 +390,12 @@
       const fileName = `bukti_donasi_${Date.now()}_${fileBukti.name.replace(/\s+/g, '_')}`;
       const { data: uploadData, error: uploadErr } = await supabaseClient
         .storage
-        .from('foto-piket')
+        .from('bukti-donasi') // <--- SUDAH DIGANTI
         .upload(fileName, fileBukti);
 
       if (uploadErr) throw uploadErr;
 
-      const { data: { publicUrl } } = supabaseClient.storage.from('foto-piket').getPublicUrl(fileName);
+      const { data: { publicUrl } } = supabaseClient.storage.from('bukti-donasi').getPublicUrl(fileName); // <--- SUDAH DIGANTI
 
       // B. Insert Data ke Supabase dengan Status 'pending' (Agar Aman)
       const { error: dbErr } = await supabaseClient

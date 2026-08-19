@@ -21,6 +21,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- Supabase JS Client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <link rel="icon" type="image/png" href="assets/images/logos/logo-pov.png" />
 <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -35,123 +39,192 @@
 }
 </script>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between">
 
-<!-- ============ NAVBAR ============ -->
-<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b" style="border-color: var(--pov-border);">
-  <div class="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between h-20 gap-4">
-    
-    <!-- Brand Logo & Nama (Aman Laptop & HP) -->
-    <a href="index.html" class="flex items-center gap-3 shrink-0">
-      <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" class="w-11 h-11 object-contain" />
-      <div class="flex flex-col justify-center leading-tight">
-        <p class="font-display font-bold text-base md:text-lg whitespace-nowrap" style="color: var(--pov-purple-900);">DPM KM FMIPA</p>
-        <p class="text-[10px] md:text-xs font-semibold tracking-wider whitespace-nowrap mt-0.5" style="color: var(--pov-gold-500);">PARLEMEN OF VISION</p>
+<div>
+  <!-- ============ NAVBAR ============ -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b" style="border-color: var(--pov-border);">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between h-20 gap-4">
+      
+      <!-- Brand Logo & Nama -->
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" class="w-11 h-11 object-contain" />
+        <div class="flex flex-col justify-center leading-tight">
+          <p class="font-display font-bold text-base md:text-lg whitespace-nowrap" style="color: var(--pov-purple-900);">DPM KM FMIPA</p>
+          <p class="text-[10px] md:text-xs font-semibold tracking-wider whitespace-nowrap mt-0.5" style="color: var(--pov-gold-500);">PARLEMEN OF VISION</p>
+        </div>
+      </a>
+
+      <!-- Menu Navigasi Desktop -->
+      <nav class="hidden md:flex items-center gap-4 lg:gap-6 text-sm font-medium">
+        <a href="index.html" data-nav="index.html" class="nav-link">Beranda</a>
+        <a href="pengurus.html" data-nav="pengurus.html" class="nav-link">Struktur Pengurus</a>
+        <a href="hall-of-fame.html" data-nav="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
+        <a href="smart-law-center.html" data-nav="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
+        <a href="wall-of-appreciation.html" data-nav="wall-of-appreciation.html" class="nav-link active">Papan Apresiasi & Donasi</a>
+        <a href="katalog-jasa.html" data-nav="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
+      </nav>
+
+      <!-- Tombol Aksi Desktop -->
+      <div class="hidden md:flex items-center gap-2.5 shrink-0">
+        <a href="absensi-harian.html" class="btn-outline text-xs lg:text-sm px-3 py-2">
+          <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
+        </a>
+        <a href="#" id="nav-senyap-btn" target="_blank" rel="noopener" class="btn-primary text-xs lg:text-sm px-3.5 py-2">
+          <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
+        </a>
       </div>
-    </a>
 
-    <!-- Menu Navigasi Desktop (Jarak Fleksibel) -->
-    <nav class="hidden md:flex items-center gap-4 lg:gap-6 text-sm font-medium">
-      <a href="index.html" data-nav="index.html" class="nav-link">Beranda</a>
-      <a href="pengurus.html" data-nav="pengurus.html" class="nav-link">Struktur Pengurus</a>
-      <a href="hall-of-fame.html" data-nav="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
-      <a href="smart-law-center.html" data-nav="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
-      <a href="wall-of-appreciation.html" data-nav="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
-      <a href="katalog-jasa.html" data-nav="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
-    </nav>
+      <!-- Tombol Menu Mobile / HP -->
+      <button id="mobile-menu-btn" class="md:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50 active:bg-purple-100 transition shrink-0" aria-label="Buka menu" aria-expanded="false">
+        <i data-lucide="menu" class="w-5 h-5" style="color: var(--pov-purple-900);"></i>
+        <span class="text-xs font-semibold tracking-wide uppercase" style="color: var(--pov-purple-900);">Menu</span>
+      </button>
+    </div>
 
-    <!-- Tombol Aksi Desktop -->
-    <div class="hidden md:flex items-center gap-2.5 shrink-0">
-      <a href="absensi-harian.html" class="btn-outline text-xs lg:text-sm px-3 py-2">
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden border-t px-5 py-4 flex flex-col gap-4 bg-white" style="border-color: var(--pov-border);">
+      <a href="index.html" class="nav-link">Beranda</a>
+      <a href="pengurus.html" class="nav-link">Struktur Pengurus</a>
+      <a href="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
+      <a href="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
+      <a href="wall-of-appreciation.html" class="nav-link active">Papan Apresiasi & Donasi</a>
+      <a href="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
+      <a href="absensi-harian.html" class="btn-outline justify-center text-sm">
         <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
       </a>
-      <a href="#" id="nav-senyap-btn" target="_blank" rel="noopener" class="btn-primary text-xs lg:text-sm px-3.5 py-2">
-        <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi
+      <a href="#" id="mobile-senyap-btn" target="_blank" rel="noopener" class="btn-primary justify-center text-sm">
+        <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi (SENYAP)
       </a>
     </div>
+  </header>
 
-    <!-- Tombol Menu Mobile / HP -->
-    <button id="mobile-menu-btn" class="md:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50 active:bg-purple-100 transition shrink-0" aria-label="Buka menu" aria-expanded="false">
-      <i data-lucide="menu" class="w-5 h-5" style="color: var(--pov-purple-900);"></i>
-      <span class="text-xs font-semibold tracking-wide uppercase" style="color: var(--pov-purple-900);">Menu</span>
-    </button>
-  </div>
-
-  <!-- Mobile Menu Dropdown -->
-  <div id="mobile-menu" class="hidden md:hidden border-t px-5 py-4 flex flex-col gap-4 bg-white" style="border-color: var(--pov-border);">
-    <a href="index.html" class="nav-link">Beranda</a>
-    <a href="pengurus.html" class="nav-link">Struktur Pengurus</a>
-    <a href="hall-of-fame.html" class="nav-link">Galeri Demisioner</a>
-    <a href="smart-law-center.html" class="nav-link">Buku Undang-Undang</a>
-    <a href="wall-of-appreciation.html" class="nav-link">Papan Apresiasi & Donasi</a>
-    <a href="katalog-jasa.html" class="nav-link">Katalog Jasa</a>
-    <a href="absensi-harian.html" class="btn-outline justify-center text-sm">
-      <i data-lucide="user-cog" class="w-4 h-4"></i> Login Pengurus
-    </a>
-    <a href="#" id="mobile-senyap-btn" target="_blank" rel="noopener" class="btn-primary justify-center text-sm">
-      <i data-lucide="lock" class="w-4 h-4"></i> Kirim Aspirasi (SENYAP)
-    </a>
-  </div>
-</header>
-
-<section class="hero-gradient seal-pattern text-white py-16 md:py-20 hero-fade-bottom">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 md:flex items-end justify-between gap-8">
-    <div>
-      <span class="pasal-tag">§ Parliament Alumni & Public Network</span>
-      <h1 class="font-display font-extrabold text-3xl md:text-5xl mt-5">Papan Apresiasi & Donasi</h1>
-      <p class="mt-4 text-purple-100 max-w-xl">
-        Bentuk transparansi donasi untuk Dana Abadi Parlemen — terbuka untuk
-        <b>alumni maupun publik</b> yang ingin turut mendukung independensi dan
-        program kerja DPM KM FMIPA UNAND.
-      </p>
-    </div>
-    <a href="#" id="donasi-cta" target="_blank" rel="noopener" class="btn-gold mt-8 md:mt-0 shrink-0">
-      <i data-lucide="heart-handshake" class="w-4 h-4"></i> Klik untuk Berdonasi
-    </a>
-  </div>
-</section>
-
-<section class="max-w-5xl mx-auto px-5 md:px-8 py-14">
-  <!-- Progress -->
-  <div class="card p-8 reveal in-view">
-    <div class="flex items-end justify-between flex-wrap gap-2 mb-4">
+  <!-- ============ HERO SECTION ============ -->
+  <section class="hero-gradient seal-pattern text-white py-16 md:py-20 hero-fade-bottom">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 md:flex items-end justify-between gap-8">
       <div>
-        <p class="section-eyebrow">Target Dana Abadi Parlemen</p>
-        <p class="font-display text-3xl font-bold mt-1" id="progress-current" style="color: var(--pov-purple-900);"></p>
+        <span class="pasal-tag">§ Parliament Alumni & Public Network</span>
+        <h1 class="font-display font-extrabold text-3xl md:text-5xl mt-5">Papan Apresiasi & Donasi</h1>
+        <p class="mt-4 text-purple-100 max-w-xl">
+          Bentuk transparansi donasi untuk Dana Abadi Parlemen — terbuka untuk
+          <b>alumni maupun publik</b> yang ingin turut mendukung independensi dan
+          program kerja DPM KM FMIPA UNAND.
+        </p>
       </div>
-      <p class="text-sm" style="color: var(--pov-ink-soft);">Target: <span id="progress-target" class="font-semibold"></span></p>
+      <button onclick="bukaModalDonasi()" class="btn-gold mt-8 md:mt-0 shrink-0 border-0 cursor-pointer shadow-lg">
+        <i data-lucide="heart-handshake" class="w-4 h-4"></i> Klik untuk Berdonasi
+      </button>
     </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
+  </section>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <section class="max-w-5xl mx-auto px-5 md:px-8 py-14 w-full">
+    <!-- Progress Dana -->
+    <div class="card p-8 reveal in-view">
+      <div class="flex items-end justify-between flex-wrap gap-2 mb-4">
+        <div>
+          <p class="section-eyebrow">Target Dana Abadi Parlemen</p>
+          <p class="font-display text-3xl font-bold mt-1" id="progress-current" style="color: var(--pov-purple-900);">Rp0</p>
+        </div>
+        <p class="text-sm" style="color: var(--pov-ink-soft);">Target: <span id="progress-target" class="font-semibold">Rp10.000.000</span></p>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
+      </div>
+      <p class="text-xs mt-2" id="progress-percent" style="color: var(--pov-ink-soft);">0% dari target tercapai</p>
+
+      <div class="mt-6 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4" style="border-color: var(--pov-border);">
+        <p class="text-sm" style="color: var(--pov-ink-soft);">
+          <i data-lucide="users" class="w-4 h-4 inline -mt-1 mr-1"></i>
+          Ingin berdonasi? Terbuka untuk <b>alumni maupun masyarakat umum</b>.
+        </p>
+        <button onclick="bukaModalDonasi()" class="btn-primary shrink-0 cursor-pointer">
+          <i data-lucide="heart-handshake" class="w-4 h-4"></i> Silakan Klik di Sini untuk Berdonasi
+        </button>
+      </div>
     </div>
-    <p class="text-xs mt-2" id="progress-percent" style="color: var(--pov-ink-soft);"></p>
 
-    <div class="mt-6 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4" style="border-color: var(--pov-border);">
-      <p class="text-sm" style="color: var(--pov-ink-soft);">
-        <i data-lucide="users" class="w-4 h-4 inline -mt-1 mr-1"></i>
-        Ingin berdonasi? Terbuka untuk <b>alumni maupun masyarakat umum</b>.
-      </p>
-      <a href="#" id="donasi-cta-2" target="_blank" rel="noopener" class="btn-primary shrink-0">
-        <i data-lucide="heart-handshake" class="w-4 h-4"></i> Silakan Klik di Sini untuk Berdonasi
-      </a>
+    <!-- List Donatur Terkini -->
+    <div class="mt-10">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="font-display font-bold text-2xl" style="color: var(--pov-purple-900);">Riwayat Donatur</h2>
+        <button onclick="muatDonaturSupabase()" class="text-xs bg-white hover:bg-gray-50 border px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow-sm" style="border-color: var(--pov-border); color: var(--pov-purple-900);">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Refresh
+        </button>
+      </div>
+
+      <div id="donor-list" class="space-y-4">
+        <div class="p-8 text-center text-gray-400">
+          <i data-lucide="loader" class="w-6 h-6 animate-spin mx-auto mb-2"></i>
+          Memuat data transparansi donatur...
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+</div>
 
-  <!-- List donatur -->
-  <div class="mt-10">
-    <h2 class="font-display font-bold text-2xl mb-6" style="color: var(--pov-purple-900);">Riwayat Donatur</h2>
-    <div id="donor-list" class="space-y-4"></div>
-  </div>
+<!-- ============ MODAL POPUP FORM DONASI ============ -->
+<div id="modal-donasi" class="fixed inset-0 z-50 bg-black/75 hidden flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto">
+  <div class="bg-white rounded-3xl max-w-xl w-full p-6 md:p-8 shadow-2xl relative my-8 border border-white/40">
+    <button onclick="tutupModalDonasi()" class="absolute right-5 top-5 p-1.5 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
 
-  <div class="card p-8 mt-10 text-center reveal">
-    <i data-lucide="info" class="w-8 h-8 mx-auto mb-3" style="color: var(--pov-gold-500);"></i>
-    <p style="color: var(--pov-ink-soft);">
-      Data donasi ini masih <b>contoh (dummy)</b>.
-    </p>
-  </div>
-</section>
+    <div class="text-center mb-6">
+      <span class="text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-purple-100 text-purple-900 border border-purple-200">
+        Kanal Resmi DPM FMIPA UNAND
+      </span>
+      <h3 class="font-display font-bold text-2xl mt-2" style="color: var(--pov-purple-950);">Form Konfirmasi Donasi</h3>
+      <p class="text-xs text-gray-500 mt-1">100% Bebas biaya admin. Uang langsung masuk ke kas organisasi.</p>
+    </div>
 
-<footer class="text-white" style="background: var(--pov-purple-950);">
+    <!-- AREA METODE PEMBAYARAN (HANYA TRANSFER BANK) -->
+    <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-6">
+      <p class="text-xs font-bold uppercase tracking-wider text-purple-900 mb-3 text-center">Transfer Bank Resmi</p>
+
+      <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-gray-200 text-left">
+        <div>
+          <p class="text-[10px] font-bold text-purple-700 uppercase">Rekening Resmi Bendahara DPM</p>
+          <p id="no-rek-dpm" class="font-mono text-sm font-bold text-gray-800">7276051959</p>
+          <p class="text-[11px] text-gray-500">Bank BSI a.n. Rizka Nurhidayah (Wakil Ketua II DPM)</p>
+        </div>
+        <button onclick="salinRekening()" type="button" class="text-xs bg-purple-50 hover:bg-purple-100 text-purple-900 font-bold px-3 py-1.5 rounded-lg border border-purple-200 transition flex items-center gap-1 shrink-0">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin
+        </button>
+      </div>
+    </div>
+
+    <!-- FORM KIRIM BUKTI -->
+    <form id="form-donasi" onsubmit="kirimDonasiSupabase(event)" class="space-y-4">
+      <div>
+        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Nama Donatur / Instansi</label>
+        <input type="text" id="donasi-nama" placeholder="Contoh: Alumni Biologi 18 / Hamba Allah" required class="w-full text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-600">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Nominal Donasi (Rp)</label>
+        <input type="number" id="donasi-nominal" min="1000" placeholder="50000" required class="w-full text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-600">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Pesan / Doa Dukungan (Opsional)</label>
+        <textarea id="donasi-pesan" rows="2" placeholder="Semoga DPM KM FMIPA UNAND semakin progresif!" class="w-full text-sm px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-purple-600"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Upload Bukti Transfer / Resi</label>
+        <input type="file" id="donasi-bukti" accept="image/*" required class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
+      </div>
+
+      <button type="submit" id="btn-submit-donasi" class="w-full py-3.5 bg-purple-900 hover:bg-purple-950 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center justify-center gap-2">
+        <i data-lucide="heart" class="w-4 h-4 text-pink-400"></i> Kirim Konfirmasi Donasi
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="text-white mt-16" style="background: var(--pov-purple-950);">
   <div class="max-w-7xl mx-auto px-5 md:px-8 pt-10">
     <div class="logo-trio justify-center md:justify-start">
       <img src="assets/images/logos/logo-dpm.png" alt="Logo Resmi DPM KM FMIPA UNAND" />
@@ -175,46 +248,190 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
-  // Tombol "Kirim Aspirasi" langsung ke Microsoft Form (bukan cuma scroll ke section)
-  document.getElementById("nav-senyap-btn").href = CONFIG.senyapFormUrl;
-  document.getElementById("mobile-senyap-btn").href = CONFIG.senyapFormUrl;
+  // 1. KONEKSI SUPABASE
+  const SUPABASE_URL = "https://fmvmxrdvhmrvirpocilm.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_KHum13R3OhyzsYj70LU-ZQ_a43fu670";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+  // 2. KONFIGURASI BOT TELEGRAM (ISIKAN TOKEN & CHAT ID KAMU DI SINI)
+  const TELEGRAM_TOKEN = "8342858904:AAFSHvNwq4wAWHorm-zTOU0DxBDPA8xbTSQ"; 
+  const TELEGRAM_CHAT_ID = "6710523301"; 
+
+  const DONASI_TARGET_AMOUNT = 10000000; // Target Rp 10.000.000
+
+  // Inisialisasi Tampilan Awal
+  document.getElementById("footer-year").textContent = new Date().getFullYear();
+  if (CONFIG && CONFIG.senyapFormUrl) {
+    document.getElementById("nav-senyap-btn").href = CONFIG.senyapFormUrl;
+    document.getElementById("mobile-senyap-btn").href = CONFIG.senyapFormUrl;
+  }
+  lucide.createIcons();
+
+  // Helper Format Rupiah & Inisial
   function formatRupiah(n) {
-    return "Rp" + n.toLocaleString("id-ID");
+    return "Rp" + Number(n).toLocaleString("id-ID");
   }
 
-  document.getElementById("donasi-cta").href = CONFIG.donasiLink;
-  document.getElementById("donasi-cta-2").href = CONFIG.donasiLink;
+  function initials(nama) {
+    if (!nama) return "DA";
+    return nama.split(" ").map(w => w[0]).join("").substring(0, 2).toUpperCase();
+  }
 
-  const totalTerkumpul = DONASI_LIST.reduce((sum, d) => sum + d.jumlah, 0);
-  const persen = Math.min(100, (totalTerkumpul / DONASI_TARGET) * 100);
+  function salinRekening() {
+    const noRek = document.getElementById("no-rek-dpm").innerText;
+    navigator.clipboard.writeText(noRek);
+    alert("Nomor rekening BSI berhasil disalin!");
+  }
 
-  document.getElementById("progress-current").textContent = formatRupiah(totalTerkumpul);
-  document.getElementById("progress-target").textContent = formatRupiah(DONASI_TARGET);
-  document.getElementById("progress-percent").textContent = `${persen.toFixed(1)}% dari target tercapai`;
+  // MODAL CONTROLLER
+  function bukaModalDonasi() {
+    document.getElementById("modal-donasi").classList.remove("hidden");
+  }
 
-  // animasi width setelah render
-  requestAnimationFrame(() => {
+  function tutupModalDonasi() {
+    document.getElementById("modal-donasi").classList.add("hidden");
+  }
+
+  // 3. FUNGSI KIRIM NOTIFIKASI KE TELEGRAM
+  async function kirimNotifTelegram(nama, nominal, pesan) {
+    const rp = new Intl.NumberFormat("id-ID").format(nominal);
+    const pesanNotif = 
+`🔔 *NOTIFIKASI DONASI MASUK!*
+
+👤 *Nama:* ${nama}
+💰 *Nominal:* Rp${rp}
+💬 *Pesan:* "${pesan || '-'}"
+
+📌 *Aksi:* Silakan cek m-Banking BSI & ubah status ke (*verified*) di dashboard Supabase agar tampil di website.`;
+
+    try {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: pesanNotif,
+          parse_mode: "Markdown"
+        })
+      });
+    } catch (err) {
+      console.error("Gagal mengirim notifikasi Telegram:", err);
+    }
+  }
+
+  // 4. MUAT DATA DONATUR (HANYA YANG STATUS 'VERIFIED')
+  async function muatDonaturSupabase() {
+    const listContainer = document.getElementById("donor-list");
+
+    const { data, error } = await supabaseClient
+      .from('donasi_logs')
+      .select('*')
+      .eq('status', 'verified')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      listContainer.innerHTML = `<p class="text-center text-xs text-red-500 font-semibold py-4">Gagal memuat data donasi: ${error.message}</p>`;
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      listContainer.innerHTML = `<div class="card p-6 text-center text-gray-500 text-sm">Belum ada donasi terverifikasi yang tercatat. Mari menjadi donatur pertama!</div>`;
+      
+      document.getElementById("progress-current").textContent = "Rp0";
+      document.getElementById("progress-bar").style.width = "0%";
+      document.getElementById("progress-percent").textContent = "0% dari target tercapai";
+      return;
+    }
+
+    // Kalkulasi Total Terkumpul
+    const totalTerkumpul = data.reduce((sum, item) => sum + (Number(item.nominal) || 0), 0);
+    const persen = Math.min(100, (totalTerkumpul / DONASI_TARGET_AMOUNT) * 100);
+
+    document.getElementById("progress-current").textContent = formatRupiah(totalTerkumpul);
+    document.getElementById("progress-target").textContent = formatRupiah(DONASI_TARGET_AMOUNT);
+    document.getElementById("progress-percent").textContent = `${persen.toFixed(1)}% dari target tercapai`;
     document.getElementById("progress-bar").style.width = persen + "%";
-  });
 
-  const donorList = document.getElementById("donor-list");
-  const sorted = [...DONASI_LIST].reverse(); // terbaru di atas
-
-  donorList.innerHTML = sorted.map(d => `
-    <div class="card p-5 flex items-start gap-4 reveal in-view">
-      <div class="avatar-fallback w-11 h-11 rounded-full text-sm shrink-0">${initials(d.nama)}</div>
-      <div class="flex-1">
-        <div class="flex items-center justify-between flex-wrap gap-2">
-          <p class="font-semibold">${d.nama}</p>
-          <span class="font-mono text-sm font-bold" style="color: var(--pov-purple-700);">${formatRupiah(d.jumlah)}</span>
+    // Render Daftar Donatur di Halaman Web
+    listContainer.innerHTML = data.map(d => `
+      <div class="card p-5 flex items-start gap-4 transition hover:shadow-md">
+        <div class="avatar-fallback w-11 h-11 rounded-full text-sm shrink-0 flex items-center justify-center font-bold" style="background: var(--pov-purple-100); color: var(--pov-purple-900);">
+          ${initials(d.nama_donatur)}
         </div>
-        <p class="text-sm mt-1 italic" style="color: var(--pov-ink-soft);">"${d.pesan}"</p>
+        <div class="flex-1">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <p class="font-semibold text-gray-800">${d.nama_donatur || 'Hamba Allah'}</p>
+            <span class="font-mono text-sm font-bold" style="color: var(--pov-purple-700);">${formatRupiah(d.nominal)}</span>
+          </div>
+          <p class="text-sm mt-1 italic" style="color: var(--pov-ink-soft);">"${d.pesan || 'Terima kasih atas dukungannya!'}"</p>
+          <p class="text-[10px] text-gray-400 mt-1">${new Date(d.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        </div>
       </div>
-    </div>
-  `).join("") || `<p style="color: var(--pov-ink-soft);">Belum ada donasi yang tercatat.</p>`;
+    `).join("");
 
-  lucide.createIcons();
+    lucide.createIcons();
+  }
+
+  // 5. PROSES KIRIM DONASI KE SUPABASE & TELEGRAM
+  async function kirimDonasiSupabase(e) {
+    e.preventDefault();
+    const btnSubmit = document.getElementById("btn-submit-donasi");
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Memproses Konfirmasi...`;
+    lucide.createIcons();
+
+    const nama = document.getElementById("donasi-nama").value.trim();
+    const nominal = document.getElementById("donasi-nominal").value;
+    const pesan = document.getElementById("donasi-pesan").value.trim();
+    const fileBukti = document.getElementById("donasi-bukti").files[0];
+
+    try {
+      // A. Upload Foto Bukti Transfer ke Supabase Storage
+      const fileName = `bukti_donasi_${Date.now()}_${fileBukti.name.replace(/\s+/g, '_')}`;
+      const { data: uploadData, error: uploadErr } = await supabaseClient
+        .storage
+        .from('foto-piket')
+        .upload(fileName, fileBukti);
+
+      if (uploadErr) throw uploadErr;
+
+      const { data: { publicUrl } } = supabaseClient.storage.from('foto-piket').getPublicUrl(fileName);
+
+      // B. Insert Data ke Supabase dengan Status 'pending' (Agar Aman)
+      const { error: dbErr } = await supabaseClient
+        .from('donasi_logs')
+        .insert([
+          {
+            nama_donatur: nama,
+            nominal: parseInt(nominal),
+            pesan: pesan,
+            bukti_url: publicUrl,
+            status: 'pending'
+          }
+        ]);
+
+      if (dbErr) throw dbErr;
+
+      // C. Kirim Notifikasi Otomatis ke Telegram HP
+      await kirimNotifTelegram(nama, nominal, pesan);
+
+      alert('🎉 Terima kasih! Konfirmasi donasi Anda telah terkirim dan sedang diverifikasi oleh Bendahara DPM sebelum ditampilkan.');
+      
+      document.getElementById("form-donasi").reset();
+      tutupModalDonasi();
+      muatDonaturSupabase();
+
+    } catch (err) {
+      alert("Gagal mengirim konfirmasi: " + err.message);
+    } finally {
+      btnSubmit.disabled = false;
+      btnSubmit.innerHTML = `<i data-lucide="heart" class="w-4 h-4 text-pink-400"></i> Kirim Konfirmasi Donasi`;
+      lucide.createIcons();
+    }
+  }
+
+  // Jalankan Pembacaan Data saat Halaman Dibuka
+  muatDonaturSupabase();
 </script>
 </body>
 </html>

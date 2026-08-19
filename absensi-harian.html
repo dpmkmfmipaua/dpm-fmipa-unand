@@ -429,14 +429,9 @@
   const KAS_NOMINAL_PER_BULAN = 5000;
   const REKENING_BSI_RIZKA = "7276051959";
 
-  // Ubah nilai ini saat backend sudah di-deploy ke Render/Railway atau subdomain kampus.
-  // Contoh: https://api.dpm.fmipa.unand.ac.id
-  // Untuk development lokal: http://localhost:3000
-  const API_BASE_URL = window.__API_BASE_URL__ || (
-    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-      ? "http://localhost:3000"
-      : "https://api.dpm.fmipa.unand.ac.id"
-  );
+  // Base URL backend AI. Ganti sesuai domain backend yang aktif.
+  // Sudah diverifikasi ke Vercel: https://dpm-fmipa-unand.vercel.app
+  const API_BASE_URL = window.__API_BASE_URL__ || "https://dpm-fmipa-unand.vercel.app";
 
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 

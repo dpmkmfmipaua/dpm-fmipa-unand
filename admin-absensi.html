@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dashboard Rekap Absensi — Admin DPM KM FMIPA UNAND</title>
+<meta name="robots" content="noindex, nofollow" />
 
 <!-- Fonts & Styling Senada Tema PoV -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,10 +104,20 @@
 
   lucide.createIcons();
 
-  // 1. Cek Login Admin
+  // 1. Cek Akses & Perketat Role Admin
   async function cekAksesAdmin() {
     const { data: { session } } = await supabaseClient.auth.getSession();
     if (!session) {
+      window.location.href = "absensi-harian.html";
+      return;
+    }
+
+    // Verifikasi ketat apakah user benar-benar memiliki role admin/sekretaris
+    const userRole = session.user.user_metadata?.role;
+    const userEmail = session.user.email.toLowerCase();
+
+    if (userRole !== "admin" && !userEmail.includes("admin")) {
+      alert("Akses ditolak! Halaman ini khusus Administrator / Sekretariat.");
       window.location.href = "absensi-harian.html";
     }
   }

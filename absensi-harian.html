@@ -279,32 +279,55 @@
 
   let currentUser = null;
   let isLocationValid = false;
+  let mediaStream = null;
 
   document.getElementById("footer-year").textContent = new Date().getFullYear();
   lucide.createIcons();
 
   // ==========================================
-  // LOGIKA LOGIN TERBARU (AUTO REDIRECT ADMIN)
+  // INTI KEAMANAN & AUTO-SESSION CHECK
   // ==========================================
+  window.addEventListener("DOMContentLoaded", async () => {
+    // Cek apakah user sudah punya session aktif sebelumnya
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      arahkanUserBerdasarkanRole(currentUser);
+    }
+  });
+
+  function arahkanUserBerdasarkanRole(user) {
+    const userRole = user.user_metadata?.role;
+    const userEmail = user.email.toLowerCase();
+
+    // Verifikasi role dari metadata Supabase (atau fallback jika email khusus admin)
+    if (userRole === "admin" || userEmail === "admin@dpm.com") {
+      window.location.href = "admin-absensi.html";
+    } else {
+      initPortal();
+    }
+  }
+
   async function handleLogin(e) {
     e.preventDefault();
-    const email = document.getElementById("login-email").value;
+    const btnLogin = document.getElementById("btn-login");
+    btnLogin.disabled = true;
+    btnLogin.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Memproses...`;
+    lucide.createIcons();
+
+    const email = document.getElementById("login-email").value.trim();
     const password = document.getElementById("login-password").value;
 
     const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
     if (error) {
       alert("Login Gagal: " + error.message);
+      btnLogin.disabled = false;
+      btnLogin.innerHTML = `<i data-lucide="log-in" class="w-4 h-4"></i> Masuk Ke Portal`;
+      lucide.createIcons();
     } else {
       currentUser = data.user;
-      
-      // Jika email mengandung 'admin' atau 'sekretaris', lemparkan langsung ke Halaman Admin Absen!
-      const userEmail = currentUser.email.toLowerCase();
-      if (userEmail.includes("admin") || userEmail.includes("sekretaris")) {
-        window.location.href = "admin-absensi.html";
-      } else {
-        initPortal();
-      }
+      arahkanUserBerdasarkanRole(currentUser);
     }
   }
 
@@ -314,7 +337,7 @@
     document.getElementById("user-profile-nav").classList.remove("hidden");
     document.getElementById("mobile-user-info").classList.remove("hidden");
 
-    const namaUser = currentUser.email.split('@')[0];
+    const namaUser = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
     document.getElementById("nav-user-name").textContent = namaUser;
     document.getElementById("mobile-user-name").textContent = namaUser;
     document.getElementById("profile-card-name").textContent = namaUser.toUpperCase();
@@ -324,16 +347,23 @@
   }
 
   async function logout() {
+    stopCamera();
     await supabaseClient.auth.signOut();
     location.reload();
   }
 
   async function startCamera() {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
-      document.getElementById("webcam").srcObject = stream;
+      mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+      document.getElementById("webcam").srcObject = mediaStream;
     } catch (err) {
-      alert("Gagal membuka kamera: " + err.message);
+      alert("Gagal membuka kamera: " + err.message + "\nPastikan izin kamera sudah diberikan di browser!");
+    }
+  }
+
+  function stopCamera() {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(track => track.stop());
     }
   }
 
@@ -392,6 +422,11 @@
   async function ambilFotoDanKirim() {
     if (!isLocationValid) return;
 
+    const btnAbsen = document.getElementById("btn-submit-absen");
+    btnAbsen.disabled = true;
+    btnAbsen.innerHTML = `<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> Mengirim Absensi...`;
+    lucide.createIcons();
+
     const video = document.getElementById("webcam");
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -402,7 +437,7 @@
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     const skrg = new Date().toLocaleString("id-ID");
-    const namaUser = currentUser.email.split('@')[0];
+    const namaUser = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
 
     ctx.fillStyle = "rgba(26, 13, 8, 0.75)";
     ctx.fillRect(0, canvas.height - 90, canvas.width, 90);
@@ -416,7 +451,7 @@
     ctx.fillText(`Waktu: ${skrg} WIB | Verified at Sekre DPM FMIPA`, 20, canvas.height - 22);
 
     canvas.toBlob(async (blob) => {
-      const fileName = `absen_${Date.now()}_${namaUser}.jpg`;
+      const fileName = `absen_${Date.now()}_${currentUser.email.split('@')[0]}.jpg`;
 
       const { data: uploadData, error: uploadErr } = await supabaseClient
         .storage
@@ -425,6 +460,9 @@
 
       if (uploadErr) {
         alert("Gagal Upload Foto: " + uploadErr.message);
+        btnAbsen.disabled = false;
+        btnAbsen.innerHTML = `<i data-lucide="camera" class="w-5 h-5"></i> Ambil Foto & Kirim Absen`;
+        lucide.createIcons();
         return;
       }
 
@@ -446,7 +484,11 @@
 
       if (dbErr) {
         alert("Gagal Menyimpan Data Absen: " + dbErr.message);
+        btnAbsen.disabled = false;
+        btnAbsen.innerHTML = `<i data-lucide="camera" class="w-5 h-5"></i> Ambil Foto & Kirim Absen`;
+        lucide.createIcons();
       } else {
+        stopCamera();
         alert("🎉 Absensi Harian Berhasil Dicatat!");
         location.reload();
       }

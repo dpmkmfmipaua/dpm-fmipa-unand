@@ -480,6 +480,24 @@
           </div>
         </div>
 
+        <!-- ================= TAB RIZKA (REKAP KAS) ================= -->
+        <div id="tab-rizka" class="tab-pane hidden bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+          <div class="border-b pb-3 flex items-center justify-between">
+            <div>
+              <h3 class="font-bold text-gray-800 text-base">Rekapitulasi Pembayaran Kas Fungsionaris</h3>
+              <p class="text-xs text-gray-500">Panel Verifikasi & Log Bukti Transfer Kas Bendahara</p>
+            </div>
+            <button onclick="muatRekapKasRizka()" class="px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold rounded-xl transition flex items-center gap-1">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Refresh Data
+            </button>
+          </div>
+
+          <!-- WADAH TEMPAT RENDER DATA KAS -->
+          <div id="container-rekap-kas" class="space-y-2">
+            <p class="text-xs text-gray-400 p-2">Memuat data rekap kas...</p>
+          </div>
+        </div>
+
         <!-- ================= TAB YUDHA (REKAP SERTA) ================= -->
         <div id="tab-yudha" class="tab-pane hidden bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-4">
           <div class="border-b pb-3">
@@ -1157,16 +1175,42 @@ Status: *Menunggu verifikasi bendahara*`;
   }
 
   // ================= REKAP BENDAHARA & PJ =================
-  async function muatRekapKasRizka() {
-    const { data } = await supabaseClient.from('kas_pengurus_logs').select('*').order('id', { ascending: false });
-    const container = document.getElementById("container-rekap-kas");
-    container.innerHTML = data.map(k => `
-      <div class="flex items-center justify-between p-2.5 bg-gray-50 border rounded-xl">
-        <div><b>${k.nama_pengurus}</b> (${k.bulan_kas}) - Status: <span class="uppercase font-bold">${k.status}</span></div>
-        <a href="${k.bukti_url}" target="_blank" class="text-orange-700 underline font-semibold">Cek Resi</a>
-      </div>
-    `).join("");
+async function muatRekapKasRizka() {
+  const container = document.getElementById("container-rekap-kas");
+  
+  // 1. Guard clause: Stop fungsi jika elemen HTML belum ada di DOM (mencegah error null)
+  if (!container) return;
+
+  // 2. Ambil data dari Supabase
+  const { data, error } = await supabaseClient
+    .from('kas_pengurus_logs')
+    .select('*')
+    .order('id', { ascending: false });
+
+  // 3. Cek jika ada error dari Supabase (misal masalah RLS)
+  if (error) {
+    console.error("Error muat rekap kas:", error);
+    container.innerHTML = `<p class="text-red-500 p-2 text-sm font-medium">Gagal memuat data: ${error.message}</p>`;
+    return;
   }
+
+  // 4. Cek jika data kosong
+  if (!data || data.length === 0) {
+    container.innerHTML = `<p class="text-gray-500 p-2 text-sm">Belum ada data pembayaran kas.</p>`;
+    return;
+  }
+
+  // 5. Render data jika berhasil
+  container.innerHTML = data.map(k => `
+    <div class="flex items-center justify-between p-2.5 bg-gray-50 border rounded-xl my-1">
+      <div>
+        <b>${k.nama_pengurus || 'Tanpa Nama'}</b> (${k.bulan_kas || '-'}) - 
+        Status: <span class="uppercase font-bold text-orange-600">${k.status || 'pending'}</span>
+      </div>
+      <a href="${k.bukti_url}" target="_blank" class="text-orange-700 underline font-semibold text-sm">Cek Resi</a>
+    </div>
+  `).join("");
+}
 
   async function muatRekapSertaYudha() {
     const container = document.getElementById("container-rekap-yudha");

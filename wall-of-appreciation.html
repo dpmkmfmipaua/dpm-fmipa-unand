@@ -253,7 +253,7 @@
   const SUPABASE_KEY = "sb_publishable_KHum13R3OhyzsYj70LU-ZQ_a43fu670";
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // 2. KONFIGURASI BOT TELEGRAM (ISIKAN TOKEN & CHAT ID KAMU DI SINI)
+  // 2. KONFIGURASI BOT TELEGRAM
   const TELEGRAM_TOKEN = "8342858904:AAFSHvNwq4wAWHorm-zTOU0DxBDPA8xbTSQ"; 
   const TELEGRAM_CHAT_ID = "6710523301"; 
 
@@ -275,6 +275,17 @@
   function initials(nama) {
     if (!nama) return "DA";
     return nama.split(" ").map(w => w[0]).join("").substring(0, 2).toUpperCase();
+  }
+
+  // Helper untuk mencegah serangan XSS (Script Injection)
+  function escapeHTML(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
   function salinRekening() {
@@ -352,7 +363,7 @@
     document.getElementById("progress-percent").textContent = `${persen.toFixed(1)}% dari target tercapai`;
     document.getElementById("progress-bar").style.width = persen + "%";
 
-    // Render Daftar Donatur di Halaman Web
+    // Render Daftar Donatur (Aman dari XSS)
     listContainer.innerHTML = data.map(d => `
       <div class="card p-5 flex items-start gap-4 transition hover:shadow-md">
         <div class="avatar-fallback w-11 h-11 rounded-full text-sm shrink-0 flex items-center justify-center font-bold" style="background: var(--pov-purple-100); color: var(--pov-purple-900);">
@@ -360,10 +371,10 @@
         </div>
         <div class="flex-1">
           <div class="flex items-center justify-between flex-wrap gap-2">
-            <p class="font-semibold text-gray-800">${d.nama_donatur || 'Hamba Allah'}</p>
+            <p class="font-semibold text-gray-800">${escapeHTML(d.nama_donatur) || 'Hamba Allah'}</p>
             <span class="font-mono text-sm font-bold" style="color: var(--pov-purple-700);">${formatRupiah(d.nominal)}</span>
           </div>
-          <p class="text-sm mt-1 italic" style="color: var(--pov-ink-soft);">"${d.pesan || 'Terima kasih atas dukungannya!'}"</p>
+          <p class="text-sm mt-1 italic" style="color: var(--pov-ink-soft);">"${escapeHTML(d.pesan) || 'Terima kasih atas dukungannya!'}"</p>
           <p class="text-[10px] text-gray-400 mt-1">${new Date(d.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
         </div>
       </div>
@@ -376,26 +387,43 @@
   async function kirimDonasiSupabase(e) {
     e.preventDefault();
     const btnSubmit = document.getElementById("btn-submit-donasi");
-    btnSubmit.disabled = true;
-    btnSubmit.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Memproses Konfirmasi...`;
-    lucide.createIcons();
 
     const nama = document.getElementById("donasi-nama").value.trim();
     const nominal = document.getElementById("donasi-nominal").value;
     const pesan = document.getElementById("donasi-pesan").value.trim();
     const fileBukti = document.getElementById("donasi-bukti").files[0];
 
+    // --- PROTEKSI KEAMANAN FILE ---
+    if (!fileBukti) {
+      alert("Silakan unggah foto bukti transfer terlebih dahulu.");
+      return;
+    }
+
+    if (!fileBukti.type.startsWith("image/")) {
+      alert("File bukti transfer harus berupa gambar (JPG, PNG, WEBP, dll)!");
+      return;
+    }
+
+    if (fileBukti.size > 5 * 1024 * 1024) {
+      alert("Ukuran foto terlalu besar! Maksimal 5 MB.");
+      return;
+    }
+
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Memproses Konfirmasi...`;
+    lucide.createIcons();
+
     try {
-      // A. Upload Foto Bukti Transfer ke Supabase Storage
+      // A. Upload Foto Bukti Transfer ke Supabase Storage (bukti-donasi)
       const fileName = `bukti_donasi_${Date.now()}_${fileBukti.name.replace(/\s+/g, '_')}`;
       const { data: uploadData, error: uploadErr } = await supabaseClient
         .storage
-        .from('bukti-donasi') // <--- SUDAH DIGANTI
+        .from('bukti-donasi')
         .upload(fileName, fileBukti);
 
       if (uploadErr) throw uploadErr;
 
-      const { data: { publicUrl } } = supabaseClient.storage.from('bukti-donasi').getPublicUrl(fileName); // <--- SUDAH DIGANTI
+      const { data: { publicUrl } } = supabaseClient.storage.from('bukti-donasi').getPublicUrl(fileName);
 
       // B. Insert Data ke Supabase dengan Status 'pending' (Agar Aman)
       const { error: dbErr } = await supabaseClient

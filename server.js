@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8000';
-const GROQ_MODEL = (process.env.GROQ_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct').trim();
+const GROQ_MODEL = (process.env.GROQ_MODEL || 'openai/gpt-oss-20b').trim();
 
 if (!GROQ_API_KEY) {
   console.error('GROQ_API_KEY is missing. Add it to the .env file or Vercel/Railway environment variables.');

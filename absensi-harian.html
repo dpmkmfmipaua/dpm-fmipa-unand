@@ -294,20 +294,50 @@
           <form id="form-bayar-kas" onsubmit="kirimKasSupabase(event)" class="space-y-4 max-w-md">
             <div>
               <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Pilih Periode Kas</label>
-              <select id="kas-periode" required class="w-full text-xs px-3.5 py-2.5 rounded-xl border border-gray-200 focus:outline-none">
-                <option value="Januari 2026">Kas Bulan Januari 2026 (Rp5.000)</option>
-                <option value="Februari 2026">Kas Bulan Februari 2026 (Rp5.000)</option>
-                <option value="Maret 2026">Kas Bulan Maret 2026 (Rp5.000)</option>
-                <option value="April 2026">Kas Bulan April 2026 (Rp5.000)</option>
-                <option value="Mei 2026">Kas Bulan Mei 2026 (Rp5.000)</option>
-                <option value="Juni 2026">Kas Bulan Juni 2026 (Rp5.000)</option>
-                <option value="Juli 2026">Kas Bulan Juli 2026 (Rp5.000)</option>
-                <option value="Agustus 2026">Kas Bulan Agustus 2026 (Rp5.000)</option>
-                <option value="September 2026">Kas Bulan September 2026 (Rp5.000)</option>
-                <option value="Oktober 2026">Kas Bulan Oktober 2026 (Rp5.000)</option>
-                <option value="November 2026">Kas Bulan November 2026 (Rp5.000)</option>
-                <option value="Desember 2026">Kas Bulan Desember 2026 (Rp5.000)</option>
-              </select>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Januari 2026"> Januari 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Februari 2026"> Februari 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Maret 2026"> Maret 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="April 2026"> April 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Mei 2026"> Mei 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Juni 2026"> Juni 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Juli 2026"> Juli 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Agustus 2026"> Agustus 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="September 2026"> September 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Oktober 2026"> Oktober 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="November 2026"> November 2026
+                </label>
+                <label class="flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-2.5 py-2 text-[10px] font-medium text-gray-700">
+                  <input type="checkbox" class="kas-bulan-option h-3.5 w-3.5 accent-orange-700" value="Desember 2026"> Desember 2026
+                </label>
+              </div>
+              <p class="mt-2 text-[10px] text-gray-500">Pilih satu atau beberapa bulan sekaligus. Total akan dihitung otomatis.</p>
+              <div class="mt-3 rounded-xl bg-orange-50 border border-orange-200 p-2.5">
+                <div class="text-[10px] font-bold uppercase tracking-wide text-orange-800">Total Yang Akan Dibayar</div>
+                <div id="kas-total-preview" class="mt-1 text-sm font-bold text-orange-900">Rp0</div>
+                <div id="kas-selected-summary" class="mt-1 text-[10px] text-gray-600">Belum ada bulan yang dipilih.</div>
+              </div>
             </div>
 
             <div>
@@ -481,6 +511,37 @@
   const KAS_NOMINAL_PER_BULAN = 5000;
   const REKENING_BSI_RIZKA = "7276051959";
 
+  function formatRupiah(value) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0
+    }).format(value);
+  }
+
+  function updatePreviewKas() {
+    const selectedBoxes = document.querySelectorAll('.kas-bulan-option:checked');
+    const totalPreview = document.getElementById('kas-total-preview');
+    const summaryText = document.getElementById('kas-selected-summary');
+
+    if (!totalPreview || !summaryText) return;
+
+    const selectedMonths = Array.from(selectedBoxes).map((checkbox) => checkbox.value);
+    const totalNominal = selectedMonths.length * KAS_NOMINAL_PER_BULAN;
+
+    totalPreview.textContent = formatRupiah(totalNominal);
+    summaryText.textContent = selectedMonths.length
+      ? `${selectedMonths.join(', ')} (${selectedMonths.length} bulan)`
+      : 'Belum ada bulan yang dipilih.';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.kas-bulan-option').forEach((checkbox) => {
+      checkbox.addEventListener('change', updatePreviewKas);
+    });
+    updatePreviewKas();
+  });
+
   // Base URL backend AI. Ganti sesuai domain backend yang aktif.
   // Sudah diverifikasi ke Vercel: https://dpm-fmipa-unand.vercel.app
   const API_BASE_URL = window.__API_BASE_URL__ || "https://dpm-fmipa-unand.vercel.app";
@@ -489,7 +550,7 @@
 
   const SEKRE_LAT = CONFIG.sekreLat;
   const SEKRE_LNG = CONFIG.sekreLng;
-  const MAX_RADIUS_METER = 15;
+  const MAX_RADIUS_METER = 50;
   const EFFECTIVE_GPS_RADIUS_METER = 1000;
 
   let currentUser = null;
@@ -744,15 +805,18 @@
       const jarak = hitungJarak(pos.coords.latitude, pos.coords.longitude, SEKRE_LAT, SEKRE_LNG);
       const btnAbsen = document.getElementById("btn-submit-absen");
       const isWithinSoftRadius = jarak <= EFFECTIVE_GPS_RADIUS_METER;
+      const isWithinStrictRadius = jarak <= MAX_RADIUS_METER;
 
       if (isWithinSoftRadius) {
         isLocationValid = true;
-        statusText.textContent = `🟢 Lokasi Terverifikasi! Terdeteksi di Sekre (${Math.round(jarak)}m)`;
-        btnAbsen.disabled = false;
-        btnAbsen.className = "w-full text-white font-bold py-3.5 rounded-xl shadow transition flex items-center justify-center gap-2 cursor-pointer text-xs bg-orange-900 hover:bg-orange-950";
+        statusText.textContent = `🟢 Lokasi aman untuk pengecekan absensi. Jarak saat ini: ${Math.round(jarak)}m. Target ideal di sekre: ≤ ${MAX_RADIUS_METER}m.`;
+        btnAbsen.disabled = !isWithinStrictRadius;
+        btnAbsen.className = isWithinStrictRadius
+          ? "w-full text-white font-bold py-3.5 rounded-xl shadow transition flex items-center justify-center gap-2 cursor-pointer text-xs bg-orange-900 hover:bg-orange-950"
+          : "w-full text-white font-bold py-3.5 rounded-xl shadow transition flex items-center justify-center gap-2 cursor-not-allowed text-xs bg-gray-200 text-gray-400";
       } else {
         isLocationValid = false;
-        statusText.textContent = `🔴 Di luar Sekre DPM! Jarakmu: ${Math.round(jarak)}m (Maks: ${MAX_RADIUS_METER}m)`;
+        statusText.textContent = `🔴 Di luar area aman! Jarakmu: ${Math.round(jarak)}m. Batas aman untuk validasi foto: ${EFFECTIVE_GPS_RADIUS_METER}m, target ideal di sekre: ${MAX_RADIUS_METER}m.`;
         btnAbsen.disabled = true;
         btnAbsen.className = "w-full text-white font-bold py-3.5 rounded-xl shadow transition flex items-center justify-center gap-2 cursor-not-allowed text-xs bg-gray-200 text-gray-400";
       }
@@ -819,16 +883,25 @@ Status: *Menunggu verifikasi bendahara*`;
   // ================= BAYAR KAS =================
   async function kirimKasSupabase(e) {
     e.preventDefault();
-    const periode = document.getElementById("kas-periode").value;
+
+    const selectedBoxes = document.querySelectorAll('.kas-bulan-option:checked');
+    const periodeList = Array.from(selectedBoxes).map((checkbox) => checkbox.value);
     const fileBukti = document.getElementById("kas-bukti").files[0];
     const userEmail = currentUser.email.toLowerCase();
     const namaUser = currentUser.user_metadata?.full_name || userEmail.split('@')[0];
+
+    if (!periodeList.length) {
+      alert("Harap pilih minimal satu bulan kas yang ingin dibayar.");
+      return;
+    }
 
     if (!fileBukti) {
       alert("Harap pilih bukti transfer kas terlebih dahulu.");
       return;
     }
 
+    const totalNominal = periodeList.length * KAS_NOMINAL_PER_BULAN;
+    const periodeText = periodeList.join(', ');
     const fileName = `kas_${Date.now()}_${userEmail.split('@')[0]}.jpg`;
     const { error: uploadError } = await supabaseClient.storage.from('bukti-kas').upload(fileName, fileBukti);
     if (uploadError) {
@@ -840,8 +913,8 @@ Status: *Menunggu verifikasi bendahara*`;
     const { error: insertError } = await supabaseClient.from('kas_pengurus_logs').insert([{
       nama_pengurus: namaUser,
       email_pengurus: userEmail,
-      bulan_kas: periode,
-      nominal: KAS_NOMINAL_PER_BULAN,
+      bulan_kas: periodeText,
+      nominal: totalNominal,
       bukti_url: urlData.publicUrl,
       status: 'pending'
     }]);
@@ -853,14 +926,15 @@ Status: *Menunggu verifikasi bendahara*`;
 
     await kirimNotifKasTelegram({
       nama: namaUser,
-      periode,
-      nominal: KAS_NOMINAL_PER_BULAN,
+      periode: periodeText,
+      nominal: totalNominal,
       buktiUrl: urlData.publicUrl,
       email: userEmail
     });
 
-    alert("🎉 Bukti bayar kas dikirim ke Bendahara Rizka!");
+    alert(`🎉 Bukti bayar kas berhasil dikirim untuk ${periodeList.length} bulan dengan total ${formatRupiah(totalNominal)}.`);
     document.getElementById("form-bayar-kas").reset();
+    updatePreviewKas();
   }
 
   // ================= ADMIN GROQ AI (AGID) =================

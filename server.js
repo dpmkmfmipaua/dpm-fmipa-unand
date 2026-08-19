@@ -6,6 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8000';
+const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.1-8b-instant';
 
 if (!GROQ_API_KEY) {
   console.error('GROQ_API_KEY is missing. Add it to the .env file or Vercel/Railway environment variables.');
@@ -38,6 +39,7 @@ function normalizeJsonArray(rawText) {
     if (Array.isArray(parsed?.result)) return parsed.result;
     if (Array.isArray(parsed?.soal)) return parsed.soal;
     if (Array.isArray(parsed?.items)) return parsed.items;
+    if (Array.isArray(parsed?.questions)) return parsed.questions;
     if (parsed && typeof parsed === 'object') {
       const values = Object.values(parsed);
       const arrayValue = values.find(Array.isArray);
@@ -47,6 +49,10 @@ function normalizeJsonArray(rawText) {
   } catch (error) {
     return null;
   }
+}
+
+function buildQuizPrompt(materi, judul, safeJumlah) {
+  return `Buatkan TEPAT ${safeJumlah} soal pilihan ganda (4 opsi) mengenai materi berikut.\n\nPENTING:\n- Wajib menghasilkan tepat ${safeJumlah} soal, tidak kurang dan tidak lebih.\n- Tiap soal harus valid dan lengkap dengan field: soal, opsi (array 4 elemen), kunci (angka 0-3).\n- Kembalikan hanya JSON valid, tanpa teks tambahan, tanpa markdown, tanpa penjelasan.\n- Format yang harus dipakai: [{"soal":"...","opsi":["A","B","C","D"],"kunci":0}]\n\nJudul kuis: ${judul || 'SERTA DPM'}\n\nMateri:\n${materi}`;
 }
 
 app.get('/', (_req, res) => {
@@ -81,45 +87,63 @@ app.post('/api/generate-quiz', async (req, res) => {
       });
     }
 
-    const systemPrompt = `Kamu adalah generator soal ujian yang handal. Balas hanya dalam format JSON valid yang dapat diparsing. Jangan berikan teks tambahan. Pastikan output adalah JSON yang valid dan gunakan kata JSON dalam instruksi ini.`;
-    const promptText = `Buatkan ${safeJumlah} soal pilihan ganda (4 opsi) mengenai materi berikut:\n${materi}\n\nJudul kuis: ${safeJudul}\n\nOUTPUT HARUS FORMAT JSON ARRAY MURNI: [{"soal":"...","opsi":["A","B","C","D"],"kunci":0}]`;
+    let lastError = null;
+    let lastParsed = null;
 
-    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${GROQ_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: 'openai/gpt-oss-20b',
-        response_format: { type: 'json_object' },
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: promptText }
-        ],
-        temperature: 0.7
-      })
+    for (let attempt = 1; attempt <= 3; attempt += 1) {
+      const systemPrompt = `Kamu adalah generator soal ujian yang handal. Pastikan output valid, konsisten, dan sesuai jumlah soal yang diminta. Jangan akhiri output dengan teks lain.`;
+      const promptText = buildQuizPrompt(materi, safeJudul, safeJumlah);
+
+      const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: GROQ_MODEL,
+          response_format: { type: 'json_object' },
+          max_tokens: 3000,
+          temperature: 0.6,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: promptText }
+          ]
+        })
+      });
+
+      const data = await groqRes.json();
+
+      if (!groqRes.ok) {
+        lastError = data?.error?.message || 'Groq gagal memproses request.';
+        continue;
+      }
+
+      const content = data?.choices?.[0]?.message?.content || '';
+      const parsed = normalizeJsonArray(content);
+
+      if (!parsed || !parsed.length) {
+        lastError = 'Groq mengembalikan format JSON yang tidak valid.';
+        continue;
+      }
+
+      lastParsed = parsed;
+
+      if (parsed.length >= safeJumlah) {
+        return res.json({ result: parsed.slice(0, safeJumlah) });
+      }
+
+      lastError = `AI menghasilkan ${parsed.length} soal, tetapi diminta ${safeJumlah}.`;
+    }
+
+    if (lastParsed && lastParsed.length) {
+      return res.json({ result: lastParsed.slice(0, safeJumlah) });
+    }
+
+    return res.status(500).json({
+      error: lastError || 'Groq tidak dapat menghasilkan soal yang sesuai dengan jumlah yang diminta.',
+      expected: safeJumlah
     });
-
-    const data = await groqRes.json();
-
-    if (!groqRes.ok) {
-      return res.status(502).json({
-        error: data?.error?.message || 'Groq gagal memproses request.'
-      });
-    }
-
-    const content = data?.choices?.[0]?.message?.content || '';
-    const parsed = normalizeJsonArray(content);
-
-    if (!parsed || !parsed.length) {
-      return res.status(500).json({
-        error: 'Groq mengembalikan format JSON yang tidak valid.',
-        raw: content
-      });
-    }
-
-    return res.json({ result: parsed });
   } catch (error) {
     return res.status(500).json({
       error: error.message || 'Terjadi kesalahan pada server.'

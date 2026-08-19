@@ -5,13 +5,20 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8000';
 
 if (!GROQ_API_KEY) {
-  console.error('GROQ_API_KEY is missing. Add it to the .env file.');
+  console.error('GROQ_API_KEY is missing. Add it to the .env file or Render/Railway environment variables.');
   process.exit(1);
 }
 
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+app.options('*', cors());
 app.use(express.json({ limit: '2mb' }));
 
 function normalizeJsonArray(rawText) {
@@ -40,8 +47,17 @@ function normalizeJsonArray(rawText) {
   }
 }
 
+app.get('/', (_req, res) => {
+  res.json({ ok: true, service: 'dpm-pov-groq-backend', status: 'running' });
+});
+
 app.get('/health', (_req, res) => {
-  res.json({ ok: true, service: 'dpm-pov-groq-backend' });
+  res.json({
+    ok: true,
+    service: 'dpm-pov-groq-backend',
+    environment: process.env.NODE_ENV || 'development',
+    frontendUrl: FRONTEND_URL
+  });
 });
 
 app.post('/api/generate-quiz', async (req, res) => {
@@ -56,6 +72,12 @@ app.post('/api/generate-quiz', async (req, res) => {
 
     const safeJudul = (judul || 'SERTA DPM').trim();
     const safeJumlah = Number(jumlahSoal);
+
+    if (!Number.isFinite(safeJumlah) || safeJumlah <= 0) {
+      return res.status(400).json({
+        error: 'jumlahSoal harus berupa angka yang valid.'
+      });
+    }
 
     const systemPrompt = `Kamu adalah generator soal ujian yang handal. Balas hanya dalam format JSON valid yang dapat diparsing. Jangan berikan teks tambahan. Pastikan output adalah JSON yang valid dan gunakan kata JSON dalam instruksi ini.`;
     const promptText = `Buatkan ${safeJumlah} soal pilihan ganda (4 opsi) mengenai materi berikut:\n${materi}\n\nJudul kuis: ${safeJudul}\n\nOUTPUT HARUS FORMAT JSON ARRAY MURNI: [{"soal":"...","opsi":["A","B","C","D"],"kunci":0}]`;
@@ -105,4 +127,5 @@ app.post('/api/generate-quiz', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server berjalan di http://localhost:${PORT}`);
+  console.log(`Frontend target: ${FRONTEND_URL}`);
 });

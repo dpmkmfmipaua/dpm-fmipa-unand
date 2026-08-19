@@ -8,8 +8,10 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8000';
 
 if (!GROQ_API_KEY) {
-  console.error('GROQ_API_KEY is missing. Add it to the .env file or Render/Railway environment variables.');
-  process.exit(1);
+  console.error('GROQ_API_KEY is missing. Add it to the .env file or Vercel/Railway environment variables.');
+  if (process.env.VERCEL !== '1') {
+    process.exit(1);
+  }
 }
 
 app.use(cors({
@@ -125,7 +127,11 @@ app.post('/api/generate-quiz', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server berjalan di http://localhost:${PORT}`);
-  console.log(`Frontend target: ${FRONTEND_URL}`);
-});
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`Server berjalan di http://localhost:${PORT}`);
+    console.log(`Frontend target: ${FRONTEND_URL}`);
+  });
+}
+
+module.exports = app;

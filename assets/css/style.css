@@ -306,6 +306,64 @@ input:focus, button:focus, textarea:focus, select:focus {
   padding: 0 0.6rem;
 }
 
+/* ===================== Responsif HP / Smartphone ===================== */
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .logo-trio {
+    gap: 0.55rem;
+    justify-content: center;
+  }
+
+  .logo-trio img, .logo-trio .logo-placeholder {
+    height: 30px;
+    width: auto;
+  }
+
+  .logo-divider {
+    height: 20px;
+  }
+
+  header .max-w-7xl {
+    gap: 0.5rem;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  header img {
+    width: 42px !important;
+    height: 42px !important;
+    max-width: 42px;
+    flex-shrink: 0;
+  }
+
+  #user-profile-nav {
+    gap: 0.5rem;
+  }
+
+  #user-profile-nav .text-right {
+    display: none;
+  }
+
+  .nav-link {
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  #mobile-menu {
+    gap: 0.85rem;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+}
+
 /* Tag hijau — dipakai untuk elemen bernuansa "resmi/institusional" DPM */
 .tag-institusional {
   display: inline-flex;

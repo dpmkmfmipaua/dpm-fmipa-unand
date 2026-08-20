@@ -753,13 +753,7 @@
       tag.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold";
     }
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(() => {
-        statusText.textContent = "Lokasi aktif. Silakan lanjutkan ke kamera.";
-      }, () => {
-        statusText.textContent = "Izin lokasi ditolak. Klik tombol ini lagi jika ingin mengaktifkan kembali.";
-      }, { enableHighAccuracy: true, timeout: 20000 });
-    }
+    cekLokasiGPS();
 
     try {
       await startCamera();

@@ -99,12 +99,72 @@
   <div class="max-w-7xl mx-auto px-5 md:px-8">
     <span class="pasal-tag">§ Struktur Kepengurusan</span>
     <h1 class="font-display font-extrabold text-3xl md:text-5xl mt-5">Fungsionaris Parlemen of Vision</h1>
-    <p class="mt-4 text-purple-100 max-w-2xl">
-      23 fungsionaris DPM KM FMIPA UNAND Periode 2025/2026, terbagi dalam Pimpinan Inti,
-      3 Komisi, dan 3 Biro. Gunakan filter di bawah untuk mencari berdasarkan bidang.
+    
+    <!-- TEKS SUDAH DIPERBARUI DI SINI -->
+    <p class="mt-4 text-purple-100 max-w-2xl leading-relaxed">
+      Di bawah bimbingan Pembina, 23 fungsionaris DPM KM FMIPA UNAND Periode 2025/2026 
+      siap mengawal aspirasi melalui Pimpinan Inti, 3 Komisi, dan 3 Biro. 
+      Gunakan filter di bawah untuk mencari berdasarkan bidang.
     </p>
+    <!-- AKHIR TEKS DIPERBARUI -->
+
   </div>
 </section>
+
+<!-- ============ SECTION PEMBINA (Compact & Mobile Friendly) ============ -->
+<section class="max-w-7xl mx-auto px-5 md:px-8 py-8 md:py-12">
+  <div class="text-center mb-6">
+    <span class="pasal-tag">§ Pelindung & Pembina</span>
+    <h2 class="font-display font-bold text-xl md:text-2xl mt-2" style="color: var(--pov-purple-900);">
+      Pembina DPM KM FMIPA UNAND
+    </h2>
+  </div>
+
+  <!-- Kartu Pembina (Ukuran proporsional, tidak mendominasi layar HP) -->
+  <div class="max-w-2xl mx-auto bg-white rounded-xl border shadow-sm p-5 md:p-6 reveal in-view" style="border-color: var(--pov-border); box-shadow: 0 4px 20px -5px rgba(76, 29, 149, 0.1);">
+    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+      
+      <!-- Foto Pembina (Lebih kecil: 24x24 di HP, 28x28 di Laptop) -->
+      <div class="relative shrink-0">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-[3px] border-white shadow-md ring-2 ring-[var(--pov-gold-500)]">
+          <!-- PENTING: Ganti 'diana-vanda.jpg' dengan nama file foto asli Anda -->
+          <img src="assets/images/bu-diana.png" alt="Dr. Diana Vanda Wellia" class="w-full h-full object-cover object-top" />
+        </div>
+        <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 bg-[var(--pov-gold-500)] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-sm whitespace-nowrap tracking-wide uppercase">
+          Pembina
+        </div>
+      </div>
+
+      <!-- Detail Pembina -->
+      <div class="flex-1 min-w-0">
+        <h3 class="font-display font-bold text-lg sm:text-xl leading-tight" style="color: var(--pov-purple-900);">
+          Dr. Diana Vanda Wellia
+        </h3>
+        <div class="mt-2 space-y-1.5">
+          <p class="text-sm sm:text-base font-semibold" style="color: var(--pov-purple-700);">
+            Pembina DPM KM FMIPA UNAND
+          </p>
+          <p class="text-xs sm:text-sm flex items-center justify-center sm:justify-start gap-1.5" style="color: var(--pov-ink-soft);">
+            <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
+            Manajer Bidang I FMIPA UNAND
+          </p>
+        </div>
+        
+        <!-- Tombol Instagram -->
+        <div class="mt-4 flex items-center justify-center sm:justify-start">
+          <!-- GANTI '#' DI BAWAH INI DENGAN LINK INSTAGRAM ASLI BELIAU -->
+          <a href="https://www.instagram.com/nandadianavw?igsi=MTY2emVmNG9mZ2JpcA==" target="_blank" rel="noopener" title="Buka Instagram Dr. Diana Vanda Wellia"
+             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors bg-[var(--pov-purple-100)] text-[var(--pov-purple-700)] hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 hover:text-white shadow-sm">
+             <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
+             <span>Instagram</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ============ AKHIR SECTION PEMBINA ============ -->
 
 <!-- ============ FILTER + GRID ============ -->
 <section class="max-w-7xl mx-auto px-5 md:px-8 py-14">
@@ -199,7 +259,6 @@
              <span>Instagram</span>
            </span>`;
 
-      // Murni persis Kodingan 1: Tanpa garis hitam border sama sekali
       const avatarContent = (typeof p.foto !== 'undefined' && p.foto)
         ? `<div class="w-16 h-16 rounded-full overflow-hidden shrink-0 flex items-end justify-center">
              <img src="${p.foto}" alt="${p.nama}" class="w-full h-full object-cover object-top transition-transform duration-300 hover:scale-110" />
@@ -244,6 +303,13 @@
 
   renderChips();
   renderGrid();
+
+  // Memastikan ikon (seperti tas briefcase di bagian Pembina) ter-render dengan baik saat halaman dimuat
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  });
 </script>
 </body>
 </html>

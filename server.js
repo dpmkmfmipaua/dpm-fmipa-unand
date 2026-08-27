@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path'); // Ditambahkan untuk menangani path file dengan aman
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,9 @@ if (!GROQ_API_KEY) {
   }
 }
 
+// ==========================================
+// 1. MIDDLEWARE DASAR
+// ==========================================
 app.use(cors({
   origin: true,
   credentials: true,
@@ -24,6 +28,35 @@ app.use(cors({
 app.options('*', cors());
 app.use(express.json({ limit: '2mb' }));
 
+// ==========================================
+// 2. SERVE FILE STATIS (PERBAIKAN UTAMA)
+// ==========================================
+// Melayani folder assets (CSS, JS, gambar, dll)
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+// Melayani file HTML di root folder
+app.use(express.static(__dirname));
+
+// ==========================================
+// 3. ROUTING HALAMAN WEBSITE (FRONTEND)
+// ==========================================
+// Saat akses root (/), tampilkan index.html (bukan JSON)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Health check endpoint (PENTING untuk Docker)
+app.get('/health', (_req, res) => {
+  res.json({
+    ok: true,
+    service: 'dpm-pov-groq-backend',
+    environment: process.env.NODE_ENV || 'development',
+    frontendUrl: FRONTEND_URL
+  });
+});
+
+// ==========================================
+// 4. FUNGSI BANTU (HELPER)
+// ==========================================
 function normalizeJsonArray(rawText) {
   if (!rawText) return null;
 
@@ -55,19 +88,9 @@ function buildQuizPrompt(materi, judul, safeJumlah) {
   return `Buatkan TEPAT ${safeJumlah} soal pilihan ganda (4 opsi) mengenai materi berikut.\n\nPENTING:\n- Wajib menghasilkan tepat ${safeJumlah} soal, tidak kurang dan tidak lebih.\n- Tiap soal harus valid dan lengkap dengan field: soal, opsi (array 4 elemen), kunci (angka 0-3).\n- Kembalikan hanya JSON valid, tanpa teks tambahan, tanpa markdown, tanpa penjelasan.\n- Format yang harus dipakai: [{"soal":"...","opsi":["A","B","C","D"],"kunci":0}]\n\nJudul kuis: ${judul || 'SERTA DPM'}\n\nMateri:\n${materi}`;
 }
 
-app.get('/', (_req, res) => {
-  res.json({ ok: true, service: 'dpm-pov-groq-backend', status: 'running' });
-});
-
-app.get('/health', (_req, res) => {
-  res.json({
-    ok: true,
-    service: 'dpm-pov-groq-backend',
-    environment: process.env.NODE_ENV || 'development',
-    frontendUrl: FRONTEND_URL
-  });
-});
-
+// ==========================================
+// 5. ROUTING API (BACKEND)
+// ==========================================
 app.post('/api/generate-quiz', async (req, res) => {
   try {
     const { materi, jumlahSoal, judul } = req.body || {};
@@ -151,6 +174,9 @@ app.post('/api/generate-quiz', async (req, res) => {
   }
 });
 
+// ==========================================
+// 6. START SERVER
+// ==========================================
 if (process.env.VERCEL !== '1') {
   app.listen(PORT, () => {
     console.log(`Server berjalan di http://localhost:${PORT}`);

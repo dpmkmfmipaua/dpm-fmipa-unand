@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  web-dpm:
+    build: .
+    container_name: dpm_fmipa_app
+    restart: always
+    
+    # Port mapping (akan di-expose ke DTI untuk Nginx reverse proxy)
+    ports:
+      - "3000:3000"
+    
+    # Load environment variables dari file .env
+    env_file:
+      - .env
+    
+    # Additional environment variables
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    
+    # Resource limits (opsional, tapi bagus untuk production)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

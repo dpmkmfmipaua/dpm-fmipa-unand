@@ -1,0 +1,27 @@
+# Dependencies & Build
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Secrets & Environment Variables (SANGAT PENTING)
+.env
+.env.local
+.env.*.local
+
+# Version Control & IDE
+.git
+.gitignore
+.vscode/
+.idea/
+
+# OS & System Files
+.DS_Store
+Thumbs.db
+
+# Documentation & Tests
+README.md
+*.md
+docs/
+test/
+coverage/
+.nyc_output/

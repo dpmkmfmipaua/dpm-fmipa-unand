@@ -6,9 +6,9 @@
 - **Nama Lembaga**: DPM KM FMIPA Universitas Andalas
 - **Nama Kabinet**: Parlemen of Vision
 - **Periode Kepengurusan**: 2025/2026
-- **Situs Resmi**: https://dpmkmfmipaua.github.io/dpm-fmipa-unand/
+- **Situs Resmi**: https://dpm.fmipa.unand.ac.id/
 - **Lokasi**: Gedung PKM FMIPA, Kampus Universitas Andalas Limau Manis, Padang, Sumatera Barat
-- **Email Resmi**: dpm@sci.unand.id
+- **Email Resmi**: dpm@sci.unand.ac.id
 - **Instagram**: @dpmkmfmipaua
 
 ## Fungsi Utama & Komisi DPM KM FMIPA UNAND
@@ -18,13 +18,13 @@
 4. **Fungsi Anggaran**: Memeriksa, menyetujui, dan mengawasi alokasi serta penggunaan anggaran kegiatan kemahasiswaan FMIPA UNAND.
 
 ## Peta Halaman Utama Website
-- [Beranda](https://dpmkmfmipaua.github.io/dpm-fmipa-unand/index.html): Pusat informasi utama, profil kabinet, berita, dan pembaruan kegiatan DPM KM FMIPA UNAND.
-- [Struktur Pengurus](https://dpmkmfmipaua.github.io/dpm-fmipa-unand/pengurus.html): Daftar pimpinan, ketua komisi, dan fungsionaris DPM KM FMIPA UNAND Kabinet Parlemen of Vision Periode 2025/2026.
-- [Smart Law Center](https://dpmkmfmipaua.github.io/dpm-fmipa-unand/smart-law-center.html): Arsip resmi Produk Hukum, Undang-Undang Mahasiswa, Ketetapan Mubes, dan Peraturan Lembaga FMIPA UNAND.
-- [Galeri Demisioner / Hall of Fame](https://dpmkmfmipaua.github.io/dpm-fmipa-unand/hall-of-fame.html): Rekam jejak sejarah kepemimpinan dan alumni pimpinan DPM KM FMIPA UNAND dari periode ke periode.
-- [Katalog Jasa Digital & SADAR MIPA](https://dpmkmfmipaua.github.io/dpm-fmipa-unand/katalog-jasa.html): Layanan resmi kemitraan media partner, peminjaman/sewa inventaris, jasa digital, serta portal advokasi SADAR MIPA.
-- [Wall of Appreciation & Donasi](https://dpmkmfmipaua.github.io/dpm-fmipa-unand/wall-of-appreciation.html): Papan apresiasi transparansi donatur dan pendukung kegiatan lembaga.
-- [Portal Absensi Harian](https://dpmkmfmipaua.github.io/dpm-fmipa-unand/absensi-harian.html): Sistem pencatatan kehadiran internal fungsionaris DPM KM FMIPA UNAND.
+- [Beranda](https://dpm.fmipa.unand.ac.id/index.html): Pusat informasi utama, profil kabinet, berita, dan pembaruan kegiatan DPM KM FMIPA UNAND.
+- [Struktur Pengurus](https://dpm.fmipa.unand.ac.id/pengurus.html): Daftar pimpinan, ketua komisi, dan fungsionaris DPM KM FMIPA UNAND Kabinet Parlemen of Vision Periode 2025/2026.
+- [Smart Law Center](https://dpm.fmipa.unand.ac.id/smart-law-center.html): Arsip resmi Produk Hukum, Undang-Undang Mahasiswa, Ketetapan Mubes, dan Peraturan Lembaga FMIPA UNAND.
+- [Galeri Demisioner / Hall of Fame](https://dpm.fmipa.unand.ac.id/hall-of-fame.html): Rekam jejak sejarah kepemimpinan dan alumni pimpinan DPM KM FMIPA UNAND dari periode ke periode.
+- [Katalog Jasa Digital & SADAR MIPA](https://dpm.fmipa.unand.ac.id/katalog-jasa.html): Layanan resmi kemitraan media partner, peminjaman/sewa inventaris, jasa digital, serta portal advokasi SADAR MIPA.
+- [Wall of Appreciation & Donasi](https://dpm.fmipa.unand.ac.id/wall-of-appreciation.html): Papan apresiasi transparansi donatur dan pendukung kegiatan lembaga.
+- [Portal Absensi Harian](https://dpm.fmipa.unand.ac.id/absensi-harian.html): Sistem pencatatan kehadiran internal fungsionaris DPM KM FMIPA UNAND.
 
 ## Saluran Aspirasi Resmi (SENYAP)
 Mahasiswa FMIPA UNAND dapat menyampaikan aspirasi, keluhan, maupun masukan secara anonim atau terbuka melalui layanan **SENYAP (Suara Enam Jurusan Menyapa)** pada platform resmi DPM KM FMIPA UNAND.

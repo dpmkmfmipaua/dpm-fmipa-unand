@@ -115,6 +115,20 @@ const DEMISIONER = [
       { nama: "Rahmi Dilla", jabatan: "Kepala Biro Infokom" },
     ],
   },
+  {
+    "periode": "2020/2021",
+    "namaParlemen": "Parlemen Sinergi Karya",
+    "pengurusInti": [
+      { "nama": "Yudha Aditra", "jabatan": "Ketua Umum" },
+      { "nama": "Tahjud Fitratillah", "jabatan": "Sekretaris Umum" },
+      { "nama": "Assyifa Syafrita", "jabatan": "Bendahara Umum" },
+      { "nama": "Rahmawati A", "jabatan": "Ketua Komisi I" },
+      { "nama": "Royhan Sauqi", "jabatan": "Ketua Komisi II" },
+      { "nama": "Nindi Maulia Azizah", "jabatan": "Ketua Komisi III" },
+      { "nama": "Sutri Wulansari Safnil", "jabatan": "Ketua Biro ADM" },
+      { "nama": "Furqan Dwiki Lintang Prawira", "jabatan": "Ketua Biro Infokom" }
+    ]
+  }
 ];
 
 // ============ 3. Buku Undang-Undang — DATA UU / PASAL ============

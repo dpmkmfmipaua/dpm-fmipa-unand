@@ -206,7 +206,7 @@ const JASA_DIGITAL = [
 const CONFIG = {
   instagram: "https://instagram.com/dpmkmfmipaua",
   senyapFormUrl: "https://forms.cloud.microsoft/r/1Ti6kEQmKF",
-  uudPdfPath: "https://drive.google.com/file/d/1ZGXlTvSIibJX4bz7pcubJUu2z4OhUq8P/view?usp=sharing",
+  uudPdfPath: "https://drive.google.com/file/d/12wUUqJzzKo1tHJVMeHVC8ggIE2skQFZG/view?usp=sharing",
   email: "dpm@sci.unand.ac.id",
   telepon: "0823 8933 8148",
   alamat: "Gedung PKM FMIPA Kampus Limau Manis, Padang 25163",

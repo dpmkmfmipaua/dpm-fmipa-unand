@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Beranda -->
+  <url>
+    <loc>https://dpm.fmipa.unand.ac.id/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Struktur Pengurus -->
+  <url>
+    <loc>https://dpm.fmipa.unand.ac.id/pengurus.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Galeri Demisioner (Hall of Fame) -->
+  <url>
+    <loc>https://dpm.fmipa.unand.ac.id/hall-of-fame.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Buku Undang-Undang (Smart Law Center) -->
+  <url>
+    <loc>https://dpm.fmipa.unand.ac.id/smart-law-center.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Papan Apresiasi & Donasi -->
+  <url>
+    <loc>https://dpm.fmipa.unand.ac.id/wall-of-appreciation.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Katalog Jasa Digital -->
+  <url>
+    <loc>https://dpm.fmipa.unand.ac.id/katalog-jasa.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

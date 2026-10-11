@@ -29,15 +29,52 @@ app.options('*', cors());
 app.use(express.json({ limit: '2mb' }));
 
 // ==========================================
-// 2. SERVE FILE STATIS (PERBAIKAN UTAMA)
+// 2. SEO: SITEMAP & ROBOTS (BARU)
 // ==========================================
+// Ditaruh SEBELUM express.static dan route lain supaya selalu terbaca.
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'robots.txt'));
+});
+
+// ==========================================
+// 3. SERVE FILE STATIS
+// ==========================================
+// Blokir file internal supaya kode server & konfigurasi tidak bisa diunduh publik
+// (karena express.static(__dirname) menyajikan SEMUA file di root folder).
+const BLOCKED_FILES = [
+  '/server.js',
+  '/package.json',
+  '/package-lock.json',
+  '/dockerfile',
+  '/docker-compose.yml',
+  '/vercel.json',
+  '/.dockerignore',
+  '/.gitignore',
+  '/.env',
+  '/.env.example',
+  '/.env.example%20'
+];
+app.use((req, res, next) => {
+  const requested = decodeURIComponent(req.path).toLowerCase();
+  if (BLOCKED_FILES.includes(requested)) {
+    return res.status(404).send('Not found');
+  }
+  next();
+});
+
 // Melayani folder assets (CSS, JS, gambar, dll)
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 // Melayani file HTML di root folder
 app.use(express.static(__dirname));
 
 // ==========================================
-// 3. ROUTING HALAMAN WEBSITE (FRONTEND)
+// 4. ROUTING HALAMAN WEBSITE (FRONTEND)
 // ==========================================
 // Saat akses root (/), tampilkan index.html (bukan JSON)
 app.get('/', (req, res) => {
@@ -55,7 +92,7 @@ app.get('/health', (_req, res) => {
 });
 
 // ==========================================
-// 4. FUNGSI BANTU (HELPER)
+// 5. FUNGSI BANTU (HELPER)
 // ==========================================
 function normalizeJsonArray(rawText) {
   if (!rawText) return null;
@@ -89,8 +126,70 @@ function buildQuizPrompt(materi, judul, safeJumlah) {
 }
 
 // ==========================================
-// 5. ROUTING API (BACKEND)
+// 6. ROUTING API (BACKEND)
 // ==========================================
+// --- Notifikasi Telegram untuk pembayaran kas (BARU) ---
+// Mendukung dua nama variabel: TELEGRAM_BOT_TOKEN atau TELEGRAM_TOKEN (yang sudah ada di Vercel)
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || process.env.TELEGRAM_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+// Pembatas sederhana: maksimal 10 permintaan per menit per IP (disimpan di memori)
+const notifHits = new Map();
+function notifRateLimited(ip) {
+  const now = Date.now();
+  const recent = (notifHits.get(ip) || []).filter((t) => now - t < 60 * 1000);
+  recent.push(now);
+  notifHits.set(ip, recent);
+  return recent.length > 10;
+}
+
+const clip = (value, max) => String(value ?? '-').slice(0, max);
+
+app.post('/api/notify-kas', async (req, res) => {
+  try {
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+      console.error('TELEGRAM_TOKEN (atau TELEGRAM_BOT_TOKEN) / TELEGRAM_CHAT_ID belum diisi.');
+      return res.status(503).json({ error: 'Notifikasi Telegram belum dikonfigurasi.' });
+    }
+
+    const ip = req.headers['x-forwarded-for'] || req.ip || 'unknown';
+    if (notifRateLimited(ip)) {
+      return res.status(429).json({ error: 'Terlalu banyak permintaan.' });
+    }
+
+    const { nama, periode, nominal, buktiUrl, email } = req.body || {};
+    if (!nama || !periode || !nominal || !buktiUrl) {
+      return res.status(400).json({ error: 'Data notifikasi tidak lengkap.' });
+    }
+
+    // Teks biasa (tanpa parse_mode) supaya karakter khusus tidak merusak pesan
+    const text =
+      `💰 Pembayaran Kas Baru\n\n` +
+      `Nama: ${clip(nama, 100)}\n` +
+      `Email: ${clip(email, 100)}\n` +
+      `Periode: ${clip(periode, 300)}\n` +
+      `Nominal: Rp${Number(nominal).toLocaleString('id-ID')}\n` +
+      `Bukti: ${clip(buktiUrl, 500)}`;
+
+    const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text })
+    });
+
+    if (!tgRes.ok) {
+      const detail = await tgRes.text();
+      console.error('Telegram menolak pesan:', detail);
+      return res.status(502).json({ error: 'Gagal mengirim ke Telegram.' });
+    }
+
+    return res.json({ ok: true });
+  } catch (error) {
+    console.error('notify-kas error:', error);
+    return res.status(500).json({ error: 'Terjadi kesalahan pada server.' });
+  }
+});
+
 app.post('/api/generate-quiz', async (req, res) => {
   try {
     const { materi, jumlahSoal, judul } = req.body || {};
@@ -175,7 +274,7 @@ app.post('/api/generate-quiz', async (req, res) => {
 });
 
 // ==========================================
-// 6. START SERVER
+// 7. START SERVER
 // ==========================================
 if (process.env.VERCEL !== '1') {
   app.listen(PORT, () => {

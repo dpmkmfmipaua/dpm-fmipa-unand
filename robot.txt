@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /absensi-harian.html
+Disallow: /admin-absensi.html
+
+Sitemap: https://dpm.fmipa.unand.ac.id/sitemap.xml

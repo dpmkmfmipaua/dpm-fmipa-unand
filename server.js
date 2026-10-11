@@ -190,6 +190,97 @@ app.post('/api/notify-kas', async (req, res) => {
   }
 });
 
+// Helper: kirim teks biasa ke grup Telegram (tanpa parse_mode agar aman dari karakter khusus)
+async function kirimTeksTelegram(text) {
+  const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text })
+  });
+  if (!tgRes.ok) {
+    console.error('Telegram menolak pesan:', await tgRes.text());
+  }
+  return tgRes.ok;
+}
+
+// --- Notifikasi Telegram untuk presensi sekre (teks saja, tanpa foto) ---
+app.post('/api/notify-absen', async (req, res) => {
+  try {
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+      console.error('TELEGRAM_TOKEN (atau TELEGRAM_BOT_TOKEN) / TELEGRAM_CHAT_ID belum diisi.');
+      return res.status(503).json({ error: 'Notifikasi Telegram belum dikonfigurasi.' });
+    }
+
+    const ip = req.headers['x-forwarded-for'] || req.ip || 'unknown';
+    if (notifRateLimited(ip)) {
+      return res.status(429).json({ error: 'Terlalu banyak permintaan.' });
+    }
+
+    const { nama } = req.body || {};
+    if (!nama) {
+      return res.status(400).json({ error: 'Nama wajib diisi.' });
+    }
+
+    const waktu = new Date().toLocaleString('id-ID', {
+      timeZone: 'Asia/Jakarta',
+      dateStyle: 'full',
+      timeStyle: 'short'
+    });
+
+    const ok = await kirimTeksTelegram(
+      `✅ Presensi Sekre\n\n` +
+      `Nama: ${clip(nama, 100)}\n` +
+      `Waktu: ${waktu} WIB\n` +
+      `Bukti foto: cek di akun admin (dashboard rekap presensi)`
+    );
+
+    if (!ok) {
+      return res.status(502).json({ error: 'Gagal mengirim ke Telegram.' });
+    }
+    return res.json({ ok: true });
+  } catch (error) {
+    console.error('notify-absen error:', error);
+    return res.status(500).json({ error: 'Terjadi kesalahan pada server.' });
+  }
+});
+
+// --- Notifikasi Telegram untuk donasi masuk ---
+app.post('/api/notify-donasi', async (req, res) => {
+  try {
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+      console.error('TELEGRAM_TOKEN (atau TELEGRAM_BOT_TOKEN) / TELEGRAM_CHAT_ID belum diisi.');
+      return res.status(503).json({ error: 'Notifikasi Telegram belum dikonfigurasi.' });
+    }
+
+    const ip = req.headers['x-forwarded-for'] || req.ip || 'unknown';
+    if (notifRateLimited(ip)) {
+      return res.status(429).json({ error: 'Terlalu banyak permintaan.' });
+    }
+
+    const { nama, nominal, pesan } = req.body || {};
+    const nominalNum = Number(nominal);
+    if (!nama || !Number.isFinite(nominalNum) || nominalNum <= 0) {
+      return res.status(400).json({ error: 'Data donasi tidak valid.' });
+    }
+
+    const ok = await kirimTeksTelegram(
+      `🔔 DONASI MASUK\n\n` +
+      `Nama: ${clip(nama, 100)}\n` +
+      `Nominal: Rp${nominalNum.toLocaleString('id-ID')}\n` +
+      `Pesan: "${clip(pesan || '-', 300)}"\n\n` +
+      `Aksi: cek m-Banking BSI, lalu ubah status ke "verified" di dashboard Supabase agar tampil di website.`
+    );
+
+    if (!ok) {
+      return res.status(502).json({ error: 'Gagal mengirim ke Telegram.' });
+    }
+    return res.json({ ok: true });
+  } catch (error) {
+    console.error('notify-donasi error:', error);
+    return res.status(500).json({ error: 'Terjadi kesalahan pada server.' });
+  }
+});
+
 app.post('/api/generate-quiz', async (req, res) => {
   try {
     const { materi, jumlahSoal, judul } = req.body || {};

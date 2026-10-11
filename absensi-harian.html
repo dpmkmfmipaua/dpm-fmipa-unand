@@ -891,6 +891,11 @@ async function ambilFotoDanKirim() {
 
       if (insertErr) throw insertErr;
 
+      // 2b. Kirim notifikasi presensi ke grup Telegram (teks saja, tanpa foto)
+      await kirimNotifAbsenTelegram({
+        nama: currentUser?.user_metadata?.full_name || currentUser?.email?.split('@')[0] || "Fungsionaris"
+      });
+
       // 3. Notifikasi Sukses
       alert("🎉 Presensi Sekre Berhasil Dicatat!");
       location.reload();
@@ -921,6 +926,23 @@ async function ambilFotoDanKirim() {
     console.error("Gagal mengirim notifikasi Telegram kas:", err);
   }
 }
+
+  // Notifikasi presensi sekre ke grup Telegram (via backend Vercel)
+  async function kirimNotifAbsenTelegram({ nama }) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/notify-absen`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nama })
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server melempar status ${res.status}`);
+      }
+    } catch (err) {
+      console.error("Gagal mengirim notifikasi Telegram absen:", err);
+    }
+  }
 
   // ================= BAYAR KAS =================
   async function kirimKasSupabase(e) {

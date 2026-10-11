@@ -253,9 +253,10 @@
   const SUPABASE_KEY = "sb_publishable_KHum13R3OhyzsYj70LU-ZQ_a43fu670";
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // 2. KONFIGURASI BOT TELEGRAM
-  const TELEGRAM_TOKEN = "8342858904:AAFSHvNwq4wAWHorm-zTOU0DxBDPA8xbTSQ"; 
-  const TELEGRAM_CHAT_ID = "6710523301"; 
+  // 2. NOTIFIKASI TELEGRAM
+  // Token bot TIDAK lagi disimpan di halaman ini. Notifikasi dikirim lewat server
+  // (Vercel) yang membaca token dari environment variable.
+  const API_BASE_URL = window.__API_BASE_URL__ || "https://dpm-fmipa-unand.vercel.app";
 
   const DONASI_TARGET_AMOUNT = 10000000; // Target Rp 10.000.000
 
@@ -303,30 +304,20 @@
     document.getElementById("modal-donasi").classList.add("hidden");
   }
 
-  // 3. FUNGSI KIRIM NOTIFIKASI KE TELEGRAM
+  // 3. FUNGSI KIRIM NOTIFIKASI KE TELEGRAM (LEWAT SERVER)
   async function kirimNotifTelegram(nama, nominal, pesan) {
-    const rp = new Intl.NumberFormat("id-ID").format(nominal);
-    const pesanNotif = 
-`🔔 *NOTIFIKASI DONASI MASUK!*
-
-👤 *Nama:* ${nama}
-💰 *Nominal:* Rp${rp}
-💬 *Pesan:* "${pesan || '-'}"
-
-📌 *Aksi:* Silakan cek m-Banking BSI & ubah status ke (*verified*) di dashboard Supabase agar tampil di website.`;
-
     try {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+      const res = await fetch(`${API_BASE_URL}/api/notify-donasi`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: pesanNotif,
-          parse_mode: "Markdown"
-        })
+        body: JSON.stringify({ nama, nominal: Number(nominal), pesan })
       });
+
+      if (!res.ok) {
+        throw new Error(`Server melempar status ${res.status}`);
+      }
     } catch (err) {
-      console.error("Gagal mengirim notifikasi Telegram:", err);
+      console.error("Gagal mengirim notifikasi Telegram donasi:", err);
     }
   }
 
@@ -440,7 +431,7 @@
 
       if (dbErr) throw dbErr;
 
-      // C. Kirim Notifikasi Otomatis ke Telegram HP
+      // C. Kirim Notifikasi Otomatis ke Telegram (grup) lewat server
       await kirimNotifTelegram(nama, nominal, pesan);
 
       alert('🎉 Terima kasih! Konfirmasi donasi Anda telah terkirim dan sedang diverifikasi oleh Bendahara DPM sebelum ditampilkan.');
